@@ -19,11 +19,11 @@ http://www.springframework.org/schema/aop/spring-aop.xsd">
     <!-- 加载系统配置文件 -->
     <!--<context:property-placeholder location="classpath:*.properties" />-->
     <!-- 扫描注解 -->
-    <context:component-scan base-package="com.bjpowernode.p2p.service"/>
+    <context:component-scan base-package="com.bjpowernode.p2p"/>
     <!-- 导入数据相关配置 -->
-    <import resource="applicationContext-datasource.xml" />
+    <import resource="dataSource.xml" />
     <!-- 导入redis配置 -->
     <import resource="applicationContext-redis.xml" />
     <!-- 导入服务提供者配置 -->
-    <import resource="applicationContext-dubbo-provider.xml" />
+    <import resource="spring-dubbo.xml" />
 </beans>

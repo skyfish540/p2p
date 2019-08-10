@@ -28,10 +28,39 @@
   <sql id="Blob_Column_List">
     product_desc
   </sql>
+  <!--
+  分页查询，后台计算出页码、页数(页大小)
+   int curPage = 2;
+   int pageSize = 10;
+   int startRow = (curPage - 1) * pageSize;
+  SELECT * FROM YourTableName LIMIT startRow,pageSize-->
+  <select id="selectLoanInfoByType" parameterType="map" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List"/>,
+    <include refid="Blob_Column_List"/>
+    from t_loan_info
+    <where>
+      <if test="productType!=null">
+        and product_type=#{productType}
+      </if>
+    </where>
+    order by release_time desc
+    limit #{startRow},#{pageSize}
+  </select>
+
+  <select id="selectLoanInfoAll"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from t_loan_info
+    where product_type=#{productType}
+
+  </select>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
-    ,
+
     <include refid="Blob_Column_List" />
     from t_loan_info
     where id = #{id,jdbcType=INTEGER}

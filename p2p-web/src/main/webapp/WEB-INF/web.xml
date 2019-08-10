@@ -39,7 +39,7 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
   </servlet-mapping>
   <!-- 欢迎页，默认进入index controller -->
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>/</welcome-file>
   </welcome-file-list>
 </web-app>
 

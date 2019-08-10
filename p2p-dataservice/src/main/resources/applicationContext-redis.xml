@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" default-lazy-init="true">
     <bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
         <property name="usePool" value="true"/>
-        <property name="hostName" value="192.168.244.129"/>
+        <property name="hostName" value="192.168.244.128"/>
         <property name="port" value="6379"/>
         <property name="timeout" value="1000"/>
         <property name="password" value="123456"/>

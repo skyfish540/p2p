@@ -1,4 +1,4 @@
-package com.bjpowernode.p2p.service.imp;
+package com.bjpowernode.p2p.service.impl;
 
 import com.bjpowernode.p2p.service.UserService;
 

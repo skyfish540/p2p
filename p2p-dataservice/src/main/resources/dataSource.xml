@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--
+        配置数据源链接池，我们这里配置的是阿里巴巴的数据源链接池，如果需要使用DBCP或C3P0链接池
+        那么直接替换class中的类路径即可，但是要求必须引入相关的jar包
+     -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://192.168.244.128:3306/p2p?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
+    </bean>
+    <!--配置MyBatis的链接工厂对象 -->
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!--指定MyBatis的主配置文件路径我们不需要指定 直接通过注解找到SQL映射-->
+<!--        <property name="configLocation" value=""/>-->
+    </bean>
+    <!--启动MyBatis的注解扫描， 用于扫描所有携带@Mapper的Java作为SQL映射-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--通知MyBatis和Spring携带@Mapper注解的类在哪个目录下 -->
+        <property name="basePackage" value="com.bjpowernode.p2p.mapper"/>
+    </bean>
+</beans>

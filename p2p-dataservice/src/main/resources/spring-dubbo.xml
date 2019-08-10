@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!--定义当前项目启动后Dubbo应用的名字 -->
+    <dubbo:application name="p2p-dataService"/>
+    <!-- 配置zookeeper注册中心的地址，用于将Dubbo注册到这个zookeeper-->
+    <dubbo:registry address="zookeeper://192.168.244.128:2181"/>
+    <!-- 配置dubbo的包扫描路径用于找到那个带有doubbo的Service注解的类所在位置，用于服务的暴露 -->
+    <dubbo:annotation package="com.bjpowernode.p2p.service.impl"/>
+</beans>
