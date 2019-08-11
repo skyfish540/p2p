@@ -1,8 +1,9 @@
 package com.bjpowernode.p2p.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class RechargeRecord {
+public class RechargeRecord implements Serializable {
     private Integer id;
 
     private Integer uid;
@@ -71,5 +72,18 @@ public class RechargeRecord {
 
     public void setRechargeDesc(String rechargeDesc) {
         this.rechargeDesc = rechargeDesc == null ? null : rechargeDesc.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "RechargeRecord{" +
+                "id=" + id +
+                ", uid=" + uid +
+                ", rechargeNo='" + rechargeNo + '\'' +
+                ", rechargeStatus='" + rechargeStatus + '\'' +
+                ", rechargeMoney=" + rechargeMoney +
+                ", rechargeTime=" + rechargeTime +
+                ", rechargeDesc='" + rechargeDesc + '\'' +
+                '}';
     }
 }

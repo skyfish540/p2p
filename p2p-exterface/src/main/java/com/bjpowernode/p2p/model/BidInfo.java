@@ -1,8 +1,9 @@
 package com.bjpowernode.p2p.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class BidInfo {
+public class BidInfo implements Serializable {
     private Integer id;
 
     private Integer loanId;
@@ -61,5 +62,17 @@ public class BidInfo {
 
     public void setBidStatus(Integer bidStatus) {
         this.bidStatus = bidStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "BidInfo{" +
+                "id=" + id +
+                ", loanId=" + loanId +
+                ", uid=" + uid +
+                ", bidMoney=" + bidMoney +
+                ", bidTime=" + bidTime +
+                ", bidStatus=" + bidStatus +
+                '}';
     }
 }

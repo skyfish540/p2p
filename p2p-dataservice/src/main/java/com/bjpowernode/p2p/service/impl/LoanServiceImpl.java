@@ -20,6 +20,7 @@ public class LoanServiceImpl implements LoanService {
     @Autowired
     private LoanInfoMapper loanInfoMapper;
 
+
     @Override
     public List<LoanInfo> queryLoanInfoByType(Map<String, Integer> map) {
         return loanInfoMapper.selectLoanInfoByType(map);
@@ -27,9 +28,11 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public List<LoanInfo> queryLoanAll(Integer productType) {
-
         return loanInfoMapper.selectLoanInfoAll(productType);
     }
 
-
+    @Override
+    public double queryHistoryRate() {
+        return loanInfoMapper.selectAvgHistoryRate();
+    }
 }

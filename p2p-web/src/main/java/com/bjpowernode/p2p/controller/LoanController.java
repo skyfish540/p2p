@@ -19,19 +19,6 @@ public class LoanController {
     @Reference
     private LoanService loanService;
 
-    @RequestMapping("/index")    //斜杠(/)表示根目录
-    public String index(Model model){
-        System.out.println("=========LoanController的index方法========");
 
-        Map<String,Integer> map = new HashMap<>();
-        //查询新手宝
-        map.put("productType",0);
-        map.put("pageSize", 1);
-        map.put("startRow", 0);
-        //List<LoanInfo> xloanInfoList=loanService.queryLoanInfoByType(map);
-        List<LoanInfo> xloanInfoList=loanService.queryLoanAll(0);
-        System.out.println(xloanInfoList);
-        model.addAttribute("xloanInfoList",xloanInfoList);
-        return "index";
-    }
+
 }

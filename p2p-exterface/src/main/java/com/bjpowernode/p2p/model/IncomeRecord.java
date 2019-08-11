@@ -1,8 +1,9 @@
 package com.bjpowernode.p2p.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class IncomeRecord {
+public class IncomeRecord implements Serializable {
     private Integer id;
 
     private Integer uid;
@@ -81,5 +82,19 @@ public class IncomeRecord {
 
     public void setIncomeStatus(Integer incomeStatus) {
         this.incomeStatus = incomeStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "IncomeRecord{" +
+                "id=" + id +
+                ", uid=" + uid +
+                ", loanId=" + loanId +
+                ", bidId=" + bidId +
+                ", bidMoney=" + bidMoney +
+                ", incomeDate=" + incomeDate +
+                ", incomeMoney=" + incomeMoney +
+                ", incomeStatus=" + incomeStatus +
+                '}';
     }
 }

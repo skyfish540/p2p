@@ -153,4 +153,25 @@ public class LoanInfo implements Serializable {
     public void setProductDesc(String productDesc) {
         this.productDesc = productDesc == null ? null : productDesc.trim();
     }
+
+    @Override
+    public String toString() {
+        return "LoanInfo{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", rate=" + rate +
+                ", cycle=" + cycle +
+                ", releaseTime=" + releaseTime +
+                ", productType=" + productType +
+                ", productNo='" + productNo + '\'' +
+                ", productMoney=" + productMoney +
+                ", leftProductMoney=" + leftProductMoney +
+                ", bidMinLimit=" + bidMinLimit +
+                ", bidMaxLimit=" + bidMaxLimit +
+                ", productStatus=" + productStatus +
+                ", productFullTime=" + productFullTime +
+                ", version=" + version +
+                ", productDesc='" + productDesc + '\'' +
+                '}';
+    }
 }

@@ -1,6 +1,8 @@
 package com.bjpowernode.p2p.model;
 
-public class FinanceAccount {
+import java.io.Serializable;
+
+public class FinanceAccount implements Serializable {
     private Integer id;
 
     private Integer uid;
@@ -29,5 +31,14 @@ public class FinanceAccount {
 
     public void setAvailableMoney(Double availableMoney) {
         this.availableMoney = availableMoney;
+    }
+
+    @Override
+    public String toString() {
+        return "FinanceAccount{" +
+                "id=" + id +
+                ", uid=" + uid +
+                ", availableMoney=" + availableMoney +
+                '}';
     }
 }

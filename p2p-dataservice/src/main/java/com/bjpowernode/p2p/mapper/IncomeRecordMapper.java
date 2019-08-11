@@ -14,4 +14,5 @@ public interface IncomeRecordMapper {
     int updateByPrimaryKeySelective(IncomeRecord record);
 
     int updateByPrimaryKey(IncomeRecord record);
+
 }

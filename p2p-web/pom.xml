@@ -140,7 +140,7 @@
       <version>3.4</version>
     </dependency>
 
-    <!-- 加载jackson包 -->
+    <!--&lt;!&ndash; 加载jackson包 &ndash;&gt;
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
@@ -155,7 +155,7 @@
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
       <version>2.7.3</version>
-    </dependency>
+    </dependency>-->
 
     <!-- 文件IO操作包start -->
     <dependency>
