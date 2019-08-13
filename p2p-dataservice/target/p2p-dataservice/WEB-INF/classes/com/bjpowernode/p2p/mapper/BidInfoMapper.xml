@@ -12,11 +12,33 @@
   <sql id="Base_Column_List">
     id, loan_id, uid, bid_money, bid_time, bid_status
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_bid_info
-    where id = #{id,jdbcType=INTEGER}
+  <select id="selectAllBidMoney" parameterType="java.lang.Double" resultType="double">
+    select sum(bid_money) from t_bid_info
+  </select>
+  <resultMap id="BidUserResultMap" type="com.bjpowernode.p2p.model.BidInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="loan_id" jdbcType="INTEGER" property="loanId" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="bid_money" jdbcType="DOUBLE" property="bidMoney" />
+    <result column="bid_time" jdbcType="TIMESTAMP" property="bidTime" />
+    <result column="bid_status" jdbcType="INTEGER" property="bidStatus" />
+    <association property="user" javaType="com.bjpowernode.p2p.model.User">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="phone" jdbcType="VARCHAR" property="phone" />
+      <result column="login_password" jdbcType="VARCHAR" property="loginPassword" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+      <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+      <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+      <result column="header_image" jdbcType="VARCHAR" property="headerImage" />
+    </association>
+  </resultMap>
+  <select id="selectBidInfoById" parameterType="java.lang.Integer" resultMap="BidUserResultMap">
+    select b.*,u.*
+    from t_bid_info b
+    left join t_user u
+    on b.uid=u.id
+    where b.loan_id = #{pid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_bid_info

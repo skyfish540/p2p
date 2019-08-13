@@ -14,6 +14,9 @@
   <sql id="Base_Column_List">
     id, phone, login_password, name, id_card, add_time, last_login_time, header_image
   </sql>
+  <select id="selectCountAllUsers" parameterType="java.lang.Long" resultType="long">
+    select count(1) from t_user
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

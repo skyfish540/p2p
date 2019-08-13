@@ -13,6 +13,9 @@
         @ResponseBody
      -->
     <mvc:annotation-driven/>
+    <!--配置 对静态资源文件的访问-->
+    <mvc:default-servlet-handler/>
+
     <!--定义视图解析器-->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/"/>

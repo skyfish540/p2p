@@ -69,7 +69,7 @@
         </div>
         <div class="jinxin-data">
             <h3>平台用户数</h3>
-            <div class="data"><span id="hzxx_ljrs">${countOfAllUsers}</span>位</div>
+            <div class="data"><span id="hzxx_ljrs">${countAllUsers}</span>位</div>
             <div class="line"></div>
             <h3>累计成交额</h3>
             <div class="data"><span id="hzxx_ljje">${allBidMoney}</span>元</div>
@@ -146,14 +146,21 @@
                         </div>
                         <div class="pro-intr"><p>优选计划项目，投资回报周期1个月，起点低，适合短期资金周转、对流动性要求高的投资人。</p></div>
                         <div class="pro-btn">
-                            <a href="${pageContext.request.contextPath}/loan/loanInfo?id=${uLoanInfo.id}" class="btn-1">立即投资</a>
+                            <c:choose>
+                                <c:when test="${uLoanInfo.productStatus ne 0}"> <!--已满标按钮-->
+                                    <a href="javascript:void(0)" class="btn-1">立即投资</a>
+                                </c:when>
+                                <c:otherwise> <!--未满标按钮-->
+                                    <a href="${pageContext.request.contextPath}/loan/loanInfo?id=${uLoanInfo.id}" class="btn-1">立即投资</a>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </div>
             </c:forEach>
         </c:if>
     </div>
-    <div class="pro-more"><i class="left-i"></i><a href="${pageContext.request.contextPath}/loan/listLoanByTypeforPage?productType=1">查看更多优选类产品</a><i class="right-i"></i></div>
+    <div class="pro-more"><i class="left-i"></i><a href="${pageContext.request.contextPath}/loan/queryListLoanByTypeForPage?productType=1">查看更多优选类产品</a><i class="right-i"></i></div>
     <!-- 优选计划end -->
 
     <!-- 散标start -->
@@ -185,7 +192,14 @@
                             </div>
                         </div>
                         <div class="pro-btn">
-                            <a href="${pageContext.request.contextPath}/loan/loanInfo?id=${loanInfo.id}" class="btn-1">立即投资</a>
+                            <:c:choose>
+                                <c:when test="${loanInfo.productStatus ne 0}"> <!--已满标按钮-->
+                                    <a href="javascript:void (0)" class="btn-1">立即投资</a>
+                                </c:when>
+                                <c:otherwise> <!--未满标按钮-->
+                                    <a href="${pageContext.request.contextPath}/loan/loanInfo?id=${loanInfo.id}" class="btn-1">立即投资</a>
+                                </c:otherwise>
+                            </:c:choose>
                         </div>
                     </div>
                 </div>
@@ -195,7 +209,7 @@
             </c:forEach>
         </c:if>
     </div>
-    <div class="pro-more"><i class="left-i"></i><a href="${pageContext.request.contextPath}/loan/listLoanByTypeforPage?productType=2">查看更多散标类产品</a><i class="right-i"></i></div>
+    <div class="pro-more"><i class="left-i"></i><a href="${pageContext.request.contextPath}/loan/queryListLoanByTypeForPage?productType=2">查看更多散标类产品</a><i class="right-i"></i></div>
     <!-- 散标end -->
 </div>
 <!--投资产品end-->

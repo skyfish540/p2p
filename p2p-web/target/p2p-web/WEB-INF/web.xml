@@ -53,7 +53,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>springMVC</servlet-name>
-    <url-pattern>/index</url-pattern>
+    <url-pattern>/</url-pattern>
   </servlet-mapping>
   <!--指定了Web工程的默认访问的欢迎页面为一个Controller中的某个请求 -->
   <welcome-file-list>

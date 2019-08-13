@@ -27,12 +27,17 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<LoanInfo> queryLoanAll(Integer productType) {
+    public long queryLoanAll(Integer productType) {
         return loanInfoMapper.selectLoanInfoAll(productType);
     }
 
     @Override
     public double queryHistoryRate() {
         return loanInfoMapper.selectAvgHistoryRate();
+    }
+
+    @Override
+    public LoanInfo queryLoanInfoById(Integer pid) {
+        return loanInfoMapper.selectLoanInfoById(pid);
     }
 }

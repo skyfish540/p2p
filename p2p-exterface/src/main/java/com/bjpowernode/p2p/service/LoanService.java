@@ -10,7 +10,9 @@ public interface LoanService {
 
     List<LoanInfo> queryLoanInfoByType(Map<String, Integer> map);
 
-    List<LoanInfo> queryLoanAll(Integer productType);
+    long queryLoanAll(Integer productType);
 
     double queryHistoryRate();
+
+    LoanInfo queryLoanInfoById(Integer pid);
 }

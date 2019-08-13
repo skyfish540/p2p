@@ -24,8 +24,10 @@ public interface LoanInfoMapper {
 
     List<LoanInfo> selectLoanInfoByType(Map<String, Integer> map);
 
-    List<LoanInfo> selectLoanInfoAll(Integer productType);
+    long selectLoanInfoAll(Integer productType);
 
     double selectAvgHistoryRate();
+
+    LoanInfo selectLoanInfoById(Integer pid);
 
 }

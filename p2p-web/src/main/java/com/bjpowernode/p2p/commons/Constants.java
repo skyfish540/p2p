@@ -12,4 +12,7 @@ public class Constants {
     public static final Integer INDEX_PAGE_XINSHOUBAO=1;
     public static final Integer INDEX_PAGE_YOUXUAN=4;
     public static final Integer INDEX_PAGE_SANBIAO=8;
+    //分页查询时，每页显示的个数
+    public static final Integer LIST_PAGE_SIZE=9;
+
 }
