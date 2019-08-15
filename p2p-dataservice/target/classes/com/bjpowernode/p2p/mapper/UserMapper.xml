@@ -17,6 +17,13 @@
   <select id="selectCountAllUsers" parameterType="java.lang.Long" resultType="long">
     select count(1) from t_user
   </select>
+
+  <select id="selectUserByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_user
+    where phone = #{phone,jdbcType=VARCHAR}
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

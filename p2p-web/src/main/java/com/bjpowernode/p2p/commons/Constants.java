@@ -14,5 +14,10 @@ public class Constants {
     public static final Integer INDEX_PAGE_SANBIAO=8;
     //分页查询时，每页显示的个数
     public static final Integer LIST_PAGE_SIZE=9;
+    //设置返回码
+    public static final String ERROR_CODE="1000";
+    public static final String SUCCESS_CODE="1001";
+    //验证码key
+    public static final String SESSION_CAPTCHA="sessionCaptcha";
 
 }

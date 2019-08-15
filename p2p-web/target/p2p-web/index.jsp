@@ -167,39 +167,39 @@
     <div class="mainBox pro-body disperse-pro clearfix">
         <div class="new-pro-icon"><img src="${pageContext.request.contextPath}/images/new-pro-icon.png"/></div>
         <c:if test="${not empty sloanInfoList }">
-            <c:forEach items="${sloanInfoList}" var="loanInfo" varStatus="index">
+            <c:forEach items="${sloanInfoList}" var="sloanInfo" varStatus="index">
                 <!--已满标时追加pro-full-->
-                <div class="pro-box <c:if test="${loanInfo.leftProductMoney eq 0}">pro-full</c:if>">
+                <div class="pro-box <c:if test="${sloanInfo.leftProductMoney eq 0}">pro-full</c:if>">
                     <div class="pro-top">
-                        <h3>${loanInfo.productName}</h3>
-                        <p>${loanInfo.productDesc}</p>
+                        <h3>${sloanInfo.productName}</h3>
+                        <p>${sloanInfo.productDesc}</p>
                     </div>
                     <div class="pro-main">
                         <div class="pro-rate">
-                            <div class="rate">${loanInfo.rate}<span>%</span></div>
+                            <div class="rate">${sloanInfo.rate}<span>%</span></div>
                             <h3>历史年化收益率</h3>
                         </div>
                         <div class="pro-data clearfix">
                             <div class="pro-cycle">
                                 <h3>投资周期</h3>
-                                <div class="data"><span>${loanInfo.cycle}</span>个月</div>
+                                <div class="data"><span>${sloanInfo.cycle}</span>个月</div>
                             </div>
                             <div class="pro-money">
                                 <h3>剩余可投金额</h3>
                                 <div class="data">
-                                    <span>${loanInfo.leftProductMoney}</span>元
+                                    <span>${sloanInfo.leftProductMoney}</span>元
                                 </div>
                             </div>
                         </div>
                         <div class="pro-btn">
-                            <:c:choose>
-                                <c:when test="${loanInfo.productStatus ne 0}"> <!--已满标按钮-->
+                            <c:choose>
+                                <c:when test="${sloanInfo.productStatus ne 0}"> <!--已满标按钮-->
                                     <a href="javascript:void (0)" class="btn-1">立即投资</a>
                                 </c:when>
                                 <c:otherwise> <!--未满标按钮-->
-                                    <a href="${pageContext.request.contextPath}/loan/loanInfo?id=${loanInfo.id}" class="btn-1">立即投资</a>
+                                    <a href="${pageContext.request.contextPath}/loan/loanInfo?id=${sloanInfo.id}" class="btn-1">立即投资</a>
                                 </c:otherwise>
-                            </:c:choose>
+                            </c:choose>
                         </div>
                     </div>
                 </div>
