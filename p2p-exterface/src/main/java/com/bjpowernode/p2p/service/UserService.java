@@ -9,5 +9,5 @@ public interface UserService {
 
     User queryUserByPhone(String phone);
 
-    void addUser(Map<String, Object> map);
+    Object addUser(Map<String, Object> map);
 }

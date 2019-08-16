@@ -19,7 +19,8 @@
     delete from t_finance_account
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.bjpowernode.p2p.model.FinanceAccount">
+
+  <insert id="insertFinanceAccount" parameterType="com.bjpowernode.p2p.model.FinanceAccount">
     insert into t_finance_account (id, uid, available_money
       )
     values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{availableMoney,jdbcType=DOUBLE}

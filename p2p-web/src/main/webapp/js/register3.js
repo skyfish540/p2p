@@ -16,12 +16,22 @@ $(function () {
     $("#captcha").blur(function () {
         checkCaptcha();
     });
+    //同意协议
+    $("#agree").click(function(){
+        var ischeck = document.getElementById("agree").checked;
+        //var ischeck=$("#agree").prop("checked")
+        if (ischeck) {
+            $("#btnRegist").attr("disabled", false);
+            $("#btnRegist").removeClass("fail");
+        } else {
+            $("#btnRegist").attr("disabled","disabled");
+            $("#btnRegist").addClass("fail");
+        }
+    });
     //注册
     $("#btnRegist").blur(function () {
         register();
     });
-
-
 });
 
 /*用户输入手机号必须进行验证
@@ -177,12 +187,12 @@ function register() {
                 }
             },
             error:function () {
-                showError("captcha","系统繁忙，请稍后重试...")
+                showError("captcha","系统繁忙，请稍后重试====")
             }
         });
 
     }else {
-        showError("captcha","系统繁忙，请稍后重试...")
+        showError("captcha","系统繁忙，请稍后重试*****")
     }
 }
 
@@ -199,4 +209,16 @@ function showSuccess(id) {
     $("#"+id+"Err").html("");
     $("#"+id+"Ok").show();
     $("#"+id).removeClass("input-red");
+}
+
+//打开注册协议弹层
+function alertBox(maskid,bosid){
+    $("#"+maskid).show();
+    $("#"+bosid).show();
+}
+
+//关闭注册协议弹层
+function closeBox(maskid,bosid){
+    $("#"+maskid).hide();
+    $("#"+bosid).hide();
 }

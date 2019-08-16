@@ -59,12 +59,13 @@ public class UserController {
     }
 
     @RequestMapping("/register")
-    public Object register(@RequestParam("phone") String phone,
+    public @ResponseBody Object register(@RequestParam("phone")String phone,
                            @RequestParam("loginPassword")String loginPassword,
                            @RequestParam("replayLoginPassWord")String replayLoginPassWord,
                            @RequestParam("captcha")String captcha,
                            HttpSession session){
 
+        System.out.println("register方法");
         ReturnObject returnObject = new ReturnObject();
         //对前端传过来的参数进行后台的验证
         if (StringUtils.isEmpty(phone)){
@@ -99,7 +100,7 @@ public class UserController {
             return returnObject;
         }
         String sessionCaptcha= (String) session.getAttribute(Constants.SESSION_CAPTCHA);
-        if (!StringUtils.equals(captcha,sessionCaptcha)){
+        if (!StringUtils.containsIgnoreCase(captcha,sessionCaptcha)){
             returnObject.setCode(Constants.ERROR_CODE);
             returnObject.setMessage("验证码输入不正确");
             return returnObject;
@@ -110,8 +111,10 @@ public class UserController {
         map.put("loginPassword",loginPassword);
         //保存数据，当service抛出异常，controller捕获到，说明注册失败，
         // 要么插入用户名表失败要么插入用户账户表失败，事务都会回滚
+
         try {
-            userService.addUser(map);
+            User tempUser= (User) userService.addUser(map);
+            System.out.println("1:"+tempUser);
             returnObject.setCode(Constants.SUCCESS_CODE);
             returnObject.setMessage("注册成功");
             return  returnObject;

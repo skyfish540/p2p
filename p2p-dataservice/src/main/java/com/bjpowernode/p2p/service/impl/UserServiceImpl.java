@@ -36,20 +36,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(Map<String, Object> map) {
+    public Object addUser(Map<String, Object> map) {
         User user= new User();
+        FinanceAccount financeAccount= null;
         user.setPhone((String) map.get("phone"));
         user.setLoginPassword((String) map.get("loginPassword"));
         user.setAddTime(new Date());
+        System.out.println("0:"+user);
         int userCount=userMapper.insertUser(user);
 
+        System.out.println("1:"+user);
+
         if (userCount>0){   //说明用户添加成功，此时需要向用户账户表里添加数据
-            FinanceAccount financeAccount= new FinanceAccount();
-            financeAccount.setId(user.getId());
+            financeAccount= new FinanceAccount();
+            financeAccount.setUid(user.getId());
             financeAccount.setAvailableMoney(Constants.INIT_ACCOUNT_MONEY);//初始化账户资金
             int accountCount=financeAccountMapper.insertFinanceAccount(financeAccount);
-
+            System.out.println(financeAccount);
+        }else {
+            System.out.println("账户插入数据失败");
         }
 
+        return user;
     }
 }
