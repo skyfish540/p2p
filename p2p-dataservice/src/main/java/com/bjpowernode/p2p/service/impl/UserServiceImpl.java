@@ -2,6 +2,7 @@ package com.bjpowernode.p2p.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.bjpowernode.p2p.commons.Constants;
+import com.bjpowernode.p2p.excepiton.MyException;
 import com.bjpowernode.p2p.mapper.FinanceAccountMapper;
 import com.bjpowernode.p2p.mapper.UserMapper;
 import com.bjpowernode.p2p.model.FinanceAccount;
@@ -36,13 +37,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object addUser(Map<String, Object> map) {
+    public void addUser(Map<String, Object> map) {
         User user= new User();
         FinanceAccount financeAccount= null;
         user.setPhone((String) map.get("phone"));
         user.setLoginPassword((String) map.get("loginPassword"));
         user.setAddTime(new Date());
-        System.out.println("0:"+user);
         int userCount=userMapper.insertUser(user);
 
         System.out.println("1:"+user);
@@ -52,11 +52,12 @@ public class UserServiceImpl implements UserService {
             financeAccount.setUid(user.getId());
             financeAccount.setAvailableMoney(Constants.INIT_ACCOUNT_MONEY);//初始化账户资金
             int accountCount=financeAccountMapper.insertFinanceAccount(financeAccount);
-            System.out.println(financeAccount);
-        }else {
-            System.out.println("账户插入数据失败");
-        }
+            if (accountCount==0){
+                throw new MyException();
+            }
 
-        return user;
+        }else {
+            throw  new MyException();
+        }
     }
 }

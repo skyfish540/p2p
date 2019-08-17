@@ -4,9 +4,12 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.bjpowernode.p2p.commons.Constants;
 import com.bjpowernode.p2p.commons.ReturnObject;
 import com.bjpowernode.p2p.model.User;
+import com.bjpowernode.p2p.service.BidService;
+import com.bjpowernode.p2p.service.LoanService;
 import com.bjpowernode.p2p.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +26,10 @@ import java.util.regex.Pattern;
 public class UserController {
     @Reference
     private UserService userService;
+    @Reference
+    private LoanService loanService;
+    @Reference
+    private BidService bidService;
 
     @RequestMapping("/checkPhone")
     public @ResponseBody Object checkPhone(@RequestParam("phone") String phone){
@@ -113,10 +120,9 @@ public class UserController {
         // 要么插入用户名表失败要么插入用户账户表失败，事务都会回滚
 
         try {
-            User tempUser= (User) userService.addUser(map);
-            System.out.println("1:"+tempUser);
+            userService.addUser(map);
             returnObject.setCode(Constants.SUCCESS_CODE);
-            returnObject.setMessage("注册成功");
+            //returnObject.setMessage("注册成功");
             return  returnObject;
         }catch (Exception e){
             e.printStackTrace();
@@ -124,5 +130,27 @@ public class UserController {
             returnObject.setMessage("注册失败");
             return  returnObject;
         }
+    }
+
+    //初始化登录页面数据
+    @RequestMapping("/initLoanState")
+    public @ResponseBody Object loadLoanState(){
+        System.out.println("loadLoanState方法");
+        //查询历史年化收益率
+        double historyRate = loanService.queryHistoryRate();
+        System.out.println("historyRate"+historyRate);
+        //查询用户总数
+        long allUsers = userService.queryCountAllUsers();
+        System.out.println("allUsers"+allUsers);
+        //查询累计成交额
+        double allBidMoney = bidService.queryAllBidMoney();
+        System.out.println("allBidMoney"+allBidMoney);
+        //把数据保存到model中,返回给页面
+        Map<String,Object> map = new HashMap<>();
+        map.put("historyRate",historyRate);
+        map.put("allUsers",allUsers);
+        map.put("allBidMoney",allBidMoney);
+
+        return map;
     }
 }
