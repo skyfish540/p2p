@@ -20,6 +20,16 @@ public class User implements Serializable {
 
     private String headerImage;
 
+    private FinanceAccount financeAccount;
+
+    public FinanceAccount getFinanceAccount() {
+        return financeAccount;
+    }
+
+    public void setFinanceAccount(FinanceAccount financeAccount) {
+        this.financeAccount = financeAccount;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -95,6 +105,7 @@ public class User implements Serializable {
                 ", addTime=" + addTime +
                 ", lastLoginTime=" + lastLoginTime +
                 ", headerImage='" + headerImage + '\'' +
+                ", financeAccount=" + financeAccount +
                 '}';
     }
 }

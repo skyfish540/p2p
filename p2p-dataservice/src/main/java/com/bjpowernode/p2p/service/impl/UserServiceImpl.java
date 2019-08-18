@@ -60,4 +60,17 @@ public class UserServiceImpl implements UserService {
             throw  new MyException();
         }
     }
+
+    @Override
+    public User queryUserByPhoneAndLoginPassword(Map<String, Object> map) {
+        User tempUser=userMapper.selectUserByPhoneAndLoginPassword(map);
+        if (tempUser!=null){
+           tempUser.setLastLoginTime(new Date());
+            int updataUserCount = userMapper.updateByPrimaryKey(tempUser);
+            if (updataUserCount==0){
+                throw  new MyException();
+            }
+        }
+        return tempUser;
+    }
 }

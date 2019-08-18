@@ -6,7 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="p2p-mybatisGenerator" />
+        <module name="p2p-outapi-demo" />
+        <module name="p2p-outapi" />
         <module name="p2p-exterface" />
         <module name="p2p-web" />
         <module name="p2p-dataservice" />
@@ -16,6 +17,8 @@
       <module name="p2p-dataservice" target="1.7" />
       <module name="p2p-exterface" target="1.5" />
       <module name="p2p-mybatisGenerator" target="1.7" />
+      <module name="p2p-outapi" target="1.7" />
+      <module name="p2p-outapi-demo" target="1.7" />
       <module name="p2p-web" target="1.7" />
     </bytecodeTargetLevel>
   </component>

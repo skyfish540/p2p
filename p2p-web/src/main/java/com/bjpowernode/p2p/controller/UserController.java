@@ -8,6 +8,7 @@ import com.bjpowernode.p2p.service.BidService;
 import com.bjpowernode.p2p.service.LoanService;
 import com.bjpowernode.p2p.service.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.protocol.HTTP;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -138,19 +139,108 @@ public class UserController {
         System.out.println("loadLoanState方法");
         //查询历史年化收益率
         double historyRate = loanService.queryHistoryRate();
-        System.out.println("historyRate"+historyRate);
         //查询用户总数
         long allUsers = userService.queryCountAllUsers();
-        System.out.println("allUsers"+allUsers);
         //查询累计成交额
         double allBidMoney = bidService.queryAllBidMoney();
-        System.out.println("allBidMoney"+allBidMoney);
         //把数据保存到model中,返回给页面
         Map<String,Object> map = new HashMap<>();
         map.put("historyRate",historyRate);
         map.put("allUsers",allUsers);
         map.put("allBidMoney",allBidMoney);
-
         return map;
     }
+
+    @RequestMapping("/login")
+    public @ResponseBody Object login(@RequestParam("phone") String phone,
+                                      @RequestParam("loginPassword") String loginPassword,
+                                      HttpSession session){
+        ReturnObject returnObject = new ReturnObject();
+        if (StringUtils.isEmpty(phone)){
+            returnObject.setCode(Constants.ERROR_CODE);
+            returnObject.setMessage("请输入账号");
+            return returnObject;
+        }
+        if (StringUtils.isEmpty(loginPassword)){
+            returnObject.setCode(Constants.ERROR_CODE);
+            returnObject.setMessage("请输入密码");
+            return returnObject;
+        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("phone",phone);
+        map.put("loginPassword",loginPassword);
+        try {
+            User user = userService.queryUserByPhoneAndLoginPassword(map);
+            if (user==null){
+                returnObject.setCode(Constants.ERROR_CODE);
+                returnObject.setMessage("用户名或密码错误");
+                return returnObject;
+            }else {
+                System.out.println(user.getFinanceAccount());
+                session.setAttribute("sessionUser", user);
+                returnObject.setCode(Constants.SUCCESS_CODE);
+                returnObject.setMessage("登录成功");
+                return returnObject;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            returnObject.setCode(Constants.ERROR_CODE);
+            returnObject.setMessage("系统忙，请稍后重试...");
+            return returnObject;
+        }
+    }
+
+    @RequestMapping("/verifyRealName")
+    public @ResponseBody Object verifyRealName(@RequestParam("realName")String realName,
+                                               @RequestParam("idCard")String idCard,
+                                               @RequestParam("replayIdCard")String replayIdCard,
+                                               @RequestParam("captcha")String captcha,
+                                               HttpSession session){
+        ReturnObject returnObject =  new ReturnObject();
+        if (StringUtils.isEmpty(realName)){
+            returnObject.setCode(Constants.ERROR_CODE);
+            returnObject.setMessage("请输入真实姓名");
+            return returnObject;
+        }
+        if (StringUtils.isEmpty(idCard)){
+            returnObject.setCode(Constants.ERROR_CODE);
+            returnObject.setMessage("请输入身份证号");
+            return returnObject;
+        }
+        if (Pattern.matches("(^\\d{15}$)|(^\\d{17}(\\d|X|x)$)",idCard)){
+            returnObject.setCode(Constants.ERROR_CODE);
+            returnObject.setMessage("身份证输入不合法");
+            return returnObject;
+        }
+        if (StringUtils.isEmpty(replayIdCard)){
+            returnObject.setCode(Constants.ERROR_CODE);
+            returnObject.setMessage("请输入确认身份证号");
+            return returnObject;
+        }
+        if (StringUtils.equals(idCard,replayIdCard)){
+            returnObject.setCode(Constants.ERROR_CODE);
+            returnObject.setMessage("两次输入的身份证号不一样");
+            return returnObject;
+        }
+        if (StringUtils.isEmpty(captcha)){
+            returnObject.setCode(Constants.ERROR_CODE);
+            returnObject.setMessage("请输入图形验证码");
+            return returnObject;
+        }
+        String sessionCaptcha= (String) session.getAttribute(Constants.SESSION_CAPTCHA);
+        if (StringUtils.containsIgnoreCase(captcha,sessionCaptcha)){
+            returnObject.setCode(Constants.ERROR_CODE);
+            returnObject.setMessage("图形验证码输入错误");
+            return returnObject;
+        }
+        //程序运行到这里，说明上面验证都通过了，此时需要调用真实身份证验证api接口
+
+
+
+
+
+        return returnObject;
+    }
+
+
 }

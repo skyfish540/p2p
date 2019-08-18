@@ -169,30 +169,27 @@ function register() {
     var captcha=$.trim($("#captcha").val());
     if (checkPhone&&checkLoginPassword&&checkReplayLoginPassword&&checkCaptcha) {
         $.ajax({
-            url:'user/register',
-            type:'post',
-            data:{
-                phone:phone,
-                loginPassword:$.md5(loginPassword),
-                replayLoginPassWord:$.md5(replayLoginPassWord),
-                captcha:captcha
+            url: 'user/register',
+            type: 'post',
+            data: {
+                phone: phone,
+                loginPassword: $.md5(loginPassword),
+                replayLoginPassWord: $.md5(replayLoginPassWord),
+                captcha: captcha
             },
             sync: false,
-            success:function (data) {
-                if (data.code=="1001"){
+            success: function (data) {
+                if (data.code == "1001") {
                     //跳转到登录页面
-                    window.location.href="login.jsp"
-                }else {
-                    showError("captcha",data.message)
+                    window.location.href = "login.jsp"
+                } else {
+                    showError("captcha", data.message)
                 }
             },
-            error:function () {
-                showError("captcha","系统繁忙，请稍后重试====")
+            error: function () {
+                showError("captcha", "系统繁忙，请稍后重试====")
             }
         });
-
-    }else {
-        showError("captcha","系统繁忙，请稍后重试*****")
     }
 }
 

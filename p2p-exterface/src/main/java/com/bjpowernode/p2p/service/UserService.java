@@ -10,4 +10,6 @@ public interface UserService {
     User queryUserByPhone(String phone);
 
     void addUser(Map<String, Object> map);
+
+    User queryUserByPhoneAndLoginPassword(Map<String, Object> map);
 }

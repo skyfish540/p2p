@@ -45,7 +45,6 @@ public class JcaptchaController {
                                      HttpServletResponse response) {
         // 生成6位随机验证码
         String captcha = getRandomCode(5);
-        System.out.println(captcha);
         try {
             // 创建字节数组输出流
             ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();

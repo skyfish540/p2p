@@ -36,7 +36,7 @@ $(function(){
         </ul>
         <div class="login-right">
             <c:choose>
-        	<c:when test="${empty sessionScope.user}">
+        	<c:when test="${empty sessionScope.sessionUser}">
             	<!--未登录begin-->
             	<div class="no-login"><a href="${pageContext.request.contextPath}/register.jsp" class="btn-reg">注册</a><a href="${pageContext.request.contextPath}/login.jsp" class="btn-login">登录</a></div>
             	<!--未登录end-->
@@ -45,12 +45,12 @@ $(function(){
                 <!--登录后begin-->
                 <div class="logged">
                     <div class="userinfo-up">
-                        <a href="${pageContext.request.contextPath}/user/myCenter" class="user-phone">${sessionScope.user.phone}</a>
+                        <a href="${pageContext.request.contextPath}/user/myCenter" class="user-phone">${sessionScope.sessionUser.phone}</a>
                         <a href="${pageContext.request.contextPath}/user/myCenter" class="user-vip" id="member">VIP</a><i></i>
                     </div>
                     <div class="userinfo-drop-down" style="height: 0px;">
                         <div class="down-bk">
-                            <div class="user-balance">余额：<span id="frame_top">${sessionScope.user.financeAccount.availableMoney == null ? "0" : sessionScope.user.financeAccount.availableMoney}</span>元</div>
+                            <div class="user-balance">余额：<span id="frame_top">${sessionScope.sessionUser.financeAccount.availableMoney == null ? "0" : sessionScope.sessionUser.financeAccount.availableMoney}</span>元</div>
                             <ul class="quick-entry clearfix">
                                 <li class="icon-recharge"><a href="${pageContext.request.contextPath}/recharge/intoRecharge"><i></i><span>充值</span></a></li>
                                 <li class="icon-invest" style="margin-left:85px;"><a href="${pageContext.request.contextPath}/loan/loan"><i></i><span>投资</span></a></li>

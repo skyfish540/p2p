@@ -24,4 +24,6 @@ public interface UserMapper {
     User selectUserByPhone(String phone);
 
     int insertUser(User user);
+
+    User selectUserByPhoneAndLoginPassword(Map<String,Object> map);
 }
