@@ -19,5 +19,7 @@ public class Constants {
     public static final String SUCCESS_CODE="1001";
     //验证码key
     public static final String SESSION_CAPTCHA="sessionCaptcha";
+    //用户的session
+    public  static final String SESSION_USER="sessionUser";
 
 }

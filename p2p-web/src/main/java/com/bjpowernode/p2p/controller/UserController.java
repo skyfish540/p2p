@@ -1,6 +1,8 @@
 package com.bjpowernode.p2p.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bjpowernode.p2p.commons.Constants;
 import com.bjpowernode.p2p.commons.ReturnObject;
 import com.bjpowernode.p2p.model.User;
@@ -8,7 +10,7 @@ import com.bjpowernode.p2p.service.BidService;
 import com.bjpowernode.p2p.service.LoanService;
 import com.bjpowernode.p2p.service.UserService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.protocol.HTTP;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -177,6 +179,7 @@ public class UserController {
                 return returnObject;
             }else {
                 System.out.println(user.getFinanceAccount());
+                //把用户信息保存到session中
                 session.setAttribute("sessionUser", user);
                 returnObject.setCode(Constants.SUCCESS_CODE);
                 returnObject.setMessage("登录成功");
@@ -234,10 +237,12 @@ public class UserController {
             return returnObject;
         }
         //程序运行到这里，说明上面验证都通过了，此时需要调用真实身份证验证api接口
-
-
-
-
+        User user= (User) session.getAttribute(Constants.SESSION_USER);
+        Map<String,Object> map = new HashMap<>();
+        map.put("realName", realName);
+        map.put("idCard", idCard);
+        map.put("id", user.getId());
+        boolean ret=userService.doRealNameVerify(map);
 
         return returnObject;
     }

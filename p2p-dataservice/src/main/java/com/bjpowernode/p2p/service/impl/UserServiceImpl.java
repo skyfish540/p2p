@@ -1,7 +1,10 @@
 package com.bjpowernode.p2p.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bjpowernode.p2p.commons.Constants;
+import com.bjpowernode.p2p.commons.HttpRequestClients;
 import com.bjpowernode.p2p.excepiton.MyException;
 import com.bjpowernode.p2p.mapper.FinanceAccountMapper;
 import com.bjpowernode.p2p.mapper.UserMapper;
@@ -12,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -72,5 +76,33 @@ public class UserServiceImpl implements UserService {
             }
         }
         return tempUser;
+    }
+
+    @Override
+    public boolean doRealNameVerify(Map<String, Object> map) {
+        Map<String,Object> verifyMap= new HashMap<>();
+        verifyMap.put("apiKey", Constants.REAL_NAME_VERIFY_APIKEY);
+        verifyMap.put("realName", map.get("realName"));
+        verifyMap.put("idCard", map.get("idCard"));
+
+        String repStr = HttpRequestClients.postOutApi(Constants.REAL_NAME_VERIFY_URL, verifyMap);
+        JSONObject jsonObject= (JSONObject) JSON.parse(repStr);
+        String code=jsonObject.getString("code");
+        String message=jsonObject.getString("message");
+        if ("1001".equals(code)){ //表示认证成功，认证信息更新到数据库
+            User user=new User();
+            user.setId((Integer) map.get("id"));
+            user.setName((String) map.get("realName"));
+            user.setIdCard((String) map.get("idCard"));
+            int result = userMapper.updateByPrimaryKey(user);
+            if (result>0){
+                return true;
+            } else {
+                throw new MyException();
+            }
+
+        }else {
+           return false;
+        }
     }
 }
