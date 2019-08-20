@@ -26,7 +26,7 @@ public class RealNameVerifyController {
         apiKeys.add("we46g865lnnjk0945njkrt98fso9");
         map.put("342655196510150509","李小龙");
         map.put("342655456510150857","张三丰");
-        map.put("382655149641504509","乔峰");
+        map.put("342422198510230498","乔峰");
     }
     @RequestMapping("/realNameVerify")
     public @ResponseBody Object realNameVerify(HttpServletRequest request){

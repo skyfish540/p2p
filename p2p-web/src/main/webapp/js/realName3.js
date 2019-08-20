@@ -115,8 +115,8 @@ function checkCaptcha() {
                 ret=false;
             }
         });
-        return ret;
     }
+    return ret;
 }
 
 //实名认证提交
@@ -126,7 +126,7 @@ function verifyRealName() {
     var replayIdCard=$.trim($("#replayIdCard").val());
     var captcha=$.trim($("#captcha").val());
     //如果上面验证都通过，则执行认证过程
-    if (checkRealName()&&checkIdCard()&&checkReplayIdCard()&&checkCaptcha()){
+    if (checkRealName()&&checkIdCard()&&checkReplayIdCard()&&checkCaptcha){
         $.ajax({
             url: 'user/verifyRealName',
             type: 'post',

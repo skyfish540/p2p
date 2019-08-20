@@ -18,6 +18,16 @@ public class BidInfo implements Serializable {
 
     private User user;
 
+    private LoanInfo loanInfo;
+
+    public LoanInfo getLoanInfo() {
+        return loanInfo;
+    }
+
+    public void setLoanInfo(LoanInfo loanInfo) {
+        this.loanInfo = loanInfo;
+    }
+
     public User getUser() {
         return user;
     }
@@ -83,6 +93,8 @@ public class BidInfo implements Serializable {
                 ", bidMoney=" + bidMoney +
                 ", bidTime=" + bidTime +
                 ", bidStatus=" + bidStatus +
+                ", user=" + user +
+                ", loanInfo=" + loanInfo +
                 '}';
     }
 }

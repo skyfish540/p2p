@@ -169,4 +169,11 @@
       header_image = #{headerImage,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <update id="updateUserRealName" parameterType="com.bjpowernode.p2p.model.User">
+     update t_user
+    set name = #{name,jdbcType=VARCHAR},
+    id_card = #{idCard,jdbcType=VARCHAR}
+    where id=#{id}
+  </update>
 </mapper>

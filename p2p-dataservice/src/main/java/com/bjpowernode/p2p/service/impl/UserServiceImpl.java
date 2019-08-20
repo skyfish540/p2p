@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
             user.setId((Integer) map.get("id"));
             user.setName((String) map.get("realName"));
             user.setIdCard((String) map.get("idCard"));
-            int result = userMapper.updateByPrimaryKey(user);
+            int result = userMapper.updateUserRealName(user);
             if (result>0){
                 return true;
             } else {

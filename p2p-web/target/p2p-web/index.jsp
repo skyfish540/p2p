@@ -35,7 +35,7 @@
     <div class="registerBody">
         <div class="register-bg"></div>
         <c:choose>
-            <c:when test="${empty user}">
+            <c:when test="${empty sessionUser}">
                 <!-- 未登录状态 -->
                 <div class="register">
                     <h3>动力金融网历史年化收益率</h3>
@@ -47,7 +47,7 @@
             <c:otherwise>
                 <!-- 登录状态 -->
                 <div class="register welcome">
-                    <div class="welcome-txt">欢迎 <span>“<b>${sessionScope.user.phone}</b>”</span><br/>来动力金融网投资！</div>
+                    <div class="welcome-txt">欢迎 <span>“<b>${sessionScope.sessionUser.phone}</b>”</span><br/>来动力金融网投资！</div>
                     <div class="bn_register"><a href="${pageContext.request.contextPath}/user/myCenter" class="btn-1">进入我的小金库</a></div>
                 </div>
             </c:otherwise>

@@ -40,6 +40,38 @@
     on b.uid=u.id
     where b.loan_id = #{pid,jdbcType=INTEGER}
   </select>
+  <resultMap id="BidLoanResultMap" type="com.bjpowernode.p2p.model.BidInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="loan_id" jdbcType="INTEGER" property="loanId" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="bid_money" jdbcType="DOUBLE" property="bidMoney" />
+    <result column="bid_time" jdbcType="TIMESTAMP" property="bidTime" />
+    <result column="bid_status" jdbcType="INTEGER" property="bidStatus" />
+    <association property="loanInfo" javaType="com.bjpowernode.p2p.model.LoanInfo">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="product_name" jdbcType="VARCHAR" property="productName" />
+      <result column="rate" jdbcType="DOUBLE" property="rate" />
+      <result column="cycle" jdbcType="INTEGER" property="cycle" />
+      <result column="release_time" jdbcType="DATE" property="releaseTime" />
+      <result column="product_type" jdbcType="INTEGER" property="productType" />
+      <result column="product_no" jdbcType="VARCHAR" property="productNo" />
+      <result column="product_money" jdbcType="DOUBLE" property="productMoney" />
+      <result column="left_product_money" jdbcType="DOUBLE" property="leftProductMoney" />
+      <result column="bid_min_limit" jdbcType="DOUBLE" property="bidMinLimit" />
+      <result column="bid_max_limit" jdbcType="DOUBLE" property="bidMaxLimit" />
+      <result column="product_status" jdbcType="INTEGER" property="productStatus" />
+      <result column="product_full_time" jdbcType="TIMESTAMP" property="productFullTime" />
+      <result column="version" jdbcType="INTEGER" property="version" />
+    </association>
+  </resultMap>
+  <select id="selectBidInfoByUid" parameterType="map" resultMap="BidLoanResultMap">
+    select b.*,l.*
+    from t_bid_info b left join t_loan_info l
+    on b.loan_id=l.id
+    where uid=#{uid}
+    order by bid_time desc
+    limit #{startRow},#{pageSize}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_bid_info
     where id = #{id,jdbcType=INTEGER}

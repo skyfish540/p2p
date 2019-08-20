@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -27,5 +28,10 @@ public class BidServiceImpl implements BidService {
     @Override
     public List<BidInfo> queryBidInfoById(Integer pid) {
         return bidInfoMapper.selectBidInfoById(pid);
+    }
+
+    @Override
+    public List<BidInfo> queryBidInfoByUid(Map<String, Object> map) {
+        return bidInfoMapper.selectBidInfoByUid(map);
     }
 }

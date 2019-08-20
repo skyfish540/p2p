@@ -21,5 +21,7 @@ public class Constants {
     public static final String SESSION_CAPTCHA="sessionCaptcha";
     //用户的session
     public  static final String SESSION_USER="sessionUser";
+    //个人中心数据列表显示条数
+    public static final Integer MY_CENTER_PAGE_SIZE=5;
 
 }

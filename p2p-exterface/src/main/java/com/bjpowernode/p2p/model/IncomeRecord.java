@@ -20,6 +20,16 @@ public class IncomeRecord implements Serializable {
 
     private Integer incomeStatus;
 
+    private LoanInfo loanInfo;
+
+    public LoanInfo getLoanInfo() {
+        return loanInfo;
+    }
+
+    public void setLoanInfo(LoanInfo loanInfo) {
+        this.loanInfo = loanInfo;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -95,6 +105,7 @@ public class IncomeRecord implements Serializable {
                 ", incomeDate=" + incomeDate +
                 ", incomeMoney=" + incomeMoney +
                 ", incomeStatus=" + incomeStatus +
+                ", loanInfo=" + loanInfo +
                 '}';
     }
 }

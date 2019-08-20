@@ -1,14 +1,13 @@
 package com.bjpowernode.p2p.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.bjpowernode.p2p.commons.Constants;
 import com.bjpowernode.p2p.commons.ReturnObject;
+import com.bjpowernode.p2p.model.BidInfo;
+import com.bjpowernode.p2p.model.IncomeRecord;
+import com.bjpowernode.p2p.model.RechargeRecord;
 import com.bjpowernode.p2p.model.User;
-import com.bjpowernode.p2p.service.BidService;
-import com.bjpowernode.p2p.service.LoanService;
-import com.bjpowernode.p2p.service.UserService;
+import com.bjpowernode.p2p.service.*;
 import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.stereotype.Controller;
@@ -16,8 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -33,6 +34,11 @@ public class UserController {
     private LoanService loanService;
     @Reference
     private BidService bidService;
+    @Reference
+    private IncomeService incomeService;
+    @Reference
+    private RechargeService rechargeService;
+
 
     @RequestMapping("/checkPhone")
     public @ResponseBody Object checkPhone(@RequestParam("phone") String phone){
@@ -84,7 +90,7 @@ public class UserController {
             return returnObject;
         }
         //字符串phone是不是匹配正则表达式^1[1-9]\d{9}$；如果匹配就返回ture；如果不匹配就返回false
-        if (!Pattern.matches("^1[1-9]\\d{9}$", phone)){
+        if (!Pattern.matches("^1[1-9]\\d{9}$",phone)){
             returnObject.setCode(Constants.ERROR_CODE);
             returnObject.setMessage("手机号格式不正确");
             return returnObject;
@@ -198,53 +204,104 @@ public class UserController {
                                                @RequestParam("idCard")String idCard,
                                                @RequestParam("replayIdCard")String replayIdCard,
                                                @RequestParam("captcha")String captcha,
-                                               HttpSession session){
-        ReturnObject returnObject =  new ReturnObject();
-        if (StringUtils.isEmpty(realName)){
+                                               HttpSession session) {
+        ReturnObject returnObject = new ReturnObject();
+        if (StringUtils.isEmpty(realName)) {
             returnObject.setCode(Constants.ERROR_CODE);
             returnObject.setMessage("请输入真实姓名");
             return returnObject;
         }
-        if (StringUtils.isEmpty(idCard)){
+        if (StringUtils.isEmpty(idCard)) {
             returnObject.setCode(Constants.ERROR_CODE);
             returnObject.setMessage("请输入身份证号");
             return returnObject;
         }
-        if (Pattern.matches("(^\\d{15}$)|(^\\d{17}(\\d|X|x)$)",idCard)){
+        if (!Pattern.matches("(^\\d{15}$)|(^\\d{17}(\\d|X|x)$)",idCard)) {
             returnObject.setCode(Constants.ERROR_CODE);
-            returnObject.setMessage("身份证输入不合法");
+            returnObject.setMessage("身份证输入不合法..");
             return returnObject;
         }
-        if (StringUtils.isEmpty(replayIdCard)){
+        if (StringUtils.isEmpty(replayIdCard)) {
             returnObject.setCode(Constants.ERROR_CODE);
             returnObject.setMessage("请输入确认身份证号");
             return returnObject;
         }
-        if (StringUtils.equals(idCard,replayIdCard)){
+        if (!StringUtils.equals(idCard,replayIdCard)) {
             returnObject.setCode(Constants.ERROR_CODE);
             returnObject.setMessage("两次输入的身份证号不一样");
             return returnObject;
         }
-        if (StringUtils.isEmpty(captcha)){
+        if (StringUtils.isEmpty(captcha)) {
             returnObject.setCode(Constants.ERROR_CODE);
             returnObject.setMessage("请输入图形验证码");
             return returnObject;
         }
-        String sessionCaptcha= (String) session.getAttribute(Constants.SESSION_CAPTCHA);
-        if (StringUtils.containsIgnoreCase(captcha,sessionCaptcha)){
+        String sessionCaptcha = (String) session.getAttribute(Constants.SESSION_CAPTCHA);
+        if (!StringUtils.containsIgnoreCase(captcha, sessionCaptcha)) {
             returnObject.setCode(Constants.ERROR_CODE);
             returnObject.setMessage("图形验证码输入错误");
             return returnObject;
         }
         //程序运行到这里，说明上面验证都通过了，此时需要调用真实身份证验证api接口
-        User user= (User) session.getAttribute(Constants.SESSION_USER);
-        Map<String,Object> map = new HashMap<>();
+        User user = (User) session.getAttribute(Constants.SESSION_USER);
+        Map<String, Object> map = new HashMap<>();
         map.put("realName", realName);
         map.put("idCard", idCard);
         map.put("id", user.getId());
-        boolean ret=userService.doRealNameVerify(map);
+        try {
+            boolean ret = userService.doRealNameVerify(map);
+            if (ret) {
+                //认证成功，更新session中保存的user
+                user.setName(realName);
+                user.setIdCard(idCard);
 
-        return returnObject;
+                returnObject.setCode(Constants.SUCCESS_CODE);
+                returnObject.setMessage("实名认证成功");
+                return returnObject;
+            } else {
+                returnObject.setCode(Constants.ERROR_CODE);
+                returnObject.setMessage("实名认证失败");
+                return returnObject;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            returnObject.setCode(Constants.ERROR_CODE);
+            returnObject.setMessage("网络异常，请稍后重试..");
+            return returnObject;
+        }
+    }
+
+    @RequestMapping("/myCenter")
+    public String myCenter(HttpSession session, Model model){
+        //获得session里的用户
+        User user = (User) session.getAttribute(Constants.SESSION_USER);
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("uid",user.getId());
+        map.put("pageSize",Constants.MY_CENTER_PAGE_SIZE);
+        map.put("startRow",0);
+
+        //查询投资记录，显示前5条
+        List<BidInfo> bidInfoList=bidService.queryBidInfoByUid(map);
+        model.addAttribute("bidInfoList",bidInfoList);
+
+        //查询充值记录，显示前5条
+        List<RechargeRecord> rechargeRecordList=rechargeService.queryRechargeByUid(map);
+        model.addAttribute("rechargeRecordList",rechargeRecordList);
+        //查询收益记录，显示前5条
+        List<IncomeRecord> incomeRecordList=incomeService.queryIncomeByUid(map);
+        model.addAttribute("incomeRecordList",incomeRecordList);
+        return "myCenter";
+    }
+
+    //退出系统
+    @RequestMapping("/logout")
+    public String logout(HttpSession session){
+        //销毁session
+        session.invalidate();
+        //删除cookie
+        //....
+        return "redirect:/";
     }
 
 

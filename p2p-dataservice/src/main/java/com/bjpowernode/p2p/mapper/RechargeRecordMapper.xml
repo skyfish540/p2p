@@ -19,6 +19,15 @@
     from t_recharge_record
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectRechargeByUid" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_recharge_record
+    where uid = #{uid,jdbcType=INTEGER}
+    order by recharge_time desc
+    limit #{startRow},#{pageSize}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_recharge_record
     where id = #{id,jdbcType=INTEGER}

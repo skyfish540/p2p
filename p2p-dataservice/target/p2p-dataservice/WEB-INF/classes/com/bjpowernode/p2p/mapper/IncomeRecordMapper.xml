@@ -21,6 +21,40 @@
     from t_income_record
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <resultMap id="IncomeLoanResultMap" type="com.bjpowernode.p2p.model.IncomeRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="loan_id" jdbcType="INTEGER" property="loanId" />
+    <result column="bid_id" jdbcType="INTEGER" property="bidId" />
+    <result column="bid_money" jdbcType="DOUBLE" property="bidMoney" />
+    <result column="income_date" jdbcType="DATE" property="incomeDate" />
+    <result column="income_money" jdbcType="DOUBLE" property="incomeMoney" />
+    <result column="income_status" jdbcType="INTEGER" property="incomeStatus" />
+    <association property="loanInfo" javaType="com.bjpowernode.p2p.model.LoanInfo">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="product_name" jdbcType="VARCHAR" property="productName" />
+      <result column="rate" jdbcType="DOUBLE" property="rate" />
+      <result column="cycle" jdbcType="INTEGER" property="cycle" />
+      <result column="release_time" jdbcType="DATE" property="releaseTime" />
+      <result column="product_type" jdbcType="INTEGER" property="productType" />
+      <result column="product_no" jdbcType="VARCHAR" property="productNo" />
+      <result column="product_money" jdbcType="DOUBLE" property="productMoney" />
+      <result column="left_product_money" jdbcType="DOUBLE" property="leftProductMoney" />
+      <result column="bid_min_limit" jdbcType="DOUBLE" property="bidMinLimit" />
+      <result column="bid_max_limit" jdbcType="DOUBLE" property="bidMaxLimit" />
+      <result column="product_status" jdbcType="INTEGER" property="productStatus" />
+      <result column="product_full_time" jdbcType="TIMESTAMP" property="productFullTime" />
+      <result column="version" jdbcType="INTEGER" property="version" />
+    </association>
+  </resultMap>
+  <select id="selectIncomeByUid" parameterType="map" resultMap="IncomeLoanResultMap">
+    select i.*,l.*
+    from t_income_record i left join t_loan_info l
+    on i.loan_id=l.id
+    where uid=#{uid,jdbcType=INTEGER}
+    order by income_date desc
+    limit #{startRow},#{pageSize}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_income_record
     where id = #{id,jdbcType=INTEGER}
