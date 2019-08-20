@@ -72,6 +72,10 @@
     order by bid_time desc
     limit #{startRow},#{pageSize}
   </select>
+
+  <select id="selectAllBidInfoByUid" parameterType="map" resultType="long">
+    select count(1) from t_bid_info where uid=#{uid,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_bid_info
     where id = #{id,jdbcType=INTEGER}

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/p2p-dataservice" />
+    <file type="web" url="file://$PROJECT_DIR$/p2p-mybatisGenerator" />
     <file type="web" url="file://$PROJECT_DIR$/p2p-outapi" />
     <file type="web" url="file://$PROJECT_DIR$/p2p-outapi-demo" />
     <file type="web" url="file://$PROJECT_DIR$/p2p-web" />
@@ -17,6 +18,7 @@
         <option value="$PROJECT_DIR$/p2p-web/pom.xml" />
         <option value="$PROJECT_DIR$/p2p-outapi/pom.xml" />
         <option value="$PROJECT_DIR$/p2p-outapi-demo/pom.xml" />
+        <option value="$PROJECT_DIR$/p2p-mybatisGenerator/pom.xml" />
       </list>
     </option>
   </component>

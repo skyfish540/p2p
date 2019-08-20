@@ -11,4 +11,6 @@ public interface BidService {
     List<BidInfo> queryBidInfoById(Integer pid);
 
     List<BidInfo> queryBidInfoByUid(Map<String, Object> map);
+
+    long queryAllBidInfoByUid(Map<String, Object> map);
 }

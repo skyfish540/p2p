@@ -25,4 +25,6 @@ public interface BidInfoMapper {
     List<BidInfo> selectBidInfoById(Integer pid);
 
     List<BidInfo> selectBidInfoByUid(Map<String, Object> map);
+
+    long selectAllBidInfoByUid(Map<String, Object> map);
 }

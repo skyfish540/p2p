@@ -34,4 +34,9 @@ public class BidServiceImpl implements BidService {
     public List<BidInfo> queryBidInfoByUid(Map<String, Object> map) {
         return bidInfoMapper.selectBidInfoByUid(map);
     }
+
+    @Override
+    public long queryAllBidInfoByUid(Map<String, Object> map) {
+        return bidInfoMapper.selectAllBidInfoByUid(map);
+    }
 }

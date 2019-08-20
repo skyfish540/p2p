@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="p2p-outapi:war">
+    <output-path>$PROJECT_DIR$/p2p-outapi/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>p2p-outapi</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="p2p-outapi.war">
+      <element id="artifact" artifact-name="p2p-outapi:war exploded" />
+    </root>
+  </artifact>
+</component>
