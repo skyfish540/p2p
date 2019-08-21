@@ -8,4 +8,6 @@ import java.util.Map;
 public interface IncomeService {
 
     List<IncomeRecord> queryIncomeByUid(Map<String, Object> map);
+
+    long queryIncomeCountByUid(Integer uid);
 }

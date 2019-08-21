@@ -22,4 +22,9 @@ public class RechargeServiceImpl implements RechargeService {
     public List<RechargeRecord> queryRechargeByUid(Map<String, Object> map) {
         return rechargeRecordMapper.selectRechargeByUid(map);
     }
+
+    @Override
+    public long queryRechargeCountByUid(Integer id) {
+        return rechargeRecordMapper.selectRechargeCountByUid(id);
+    }
 }

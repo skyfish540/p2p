@@ -55,6 +55,10 @@
     order by income_date desc
     limit #{startRow},#{pageSize}
   </select>
+
+  <select id="selectIncomeCountByUid" parameterType="java.lang.Integer" resultType="long">
+    select count(1) from t_income_record where uid=#{uid,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_income_record
     where id = #{id,jdbcType=INTEGER}

@@ -2,6 +2,7 @@ package com.bjpowernode.p2p.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.bjpowernode.p2p.commons.Constants;
+import com.bjpowernode.p2p.commons.ReturnObject;
 import com.bjpowernode.p2p.model.BidInfo;
 import com.bjpowernode.p2p.model.User;
 import com.bjpowernode.p2p.service.BidService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -56,9 +58,22 @@ public class BidController {
         model.addAttribute("pageNo", pageNo);
         model.addAttribute("totalRows",totalRows);
         model.addAttribute("totalPages",totalPages);
-
-
-
         return "myBid";
+    }
+
+    @RequestMapping("/invest")
+    public @ResponseBody Object invest(@RequestParam("bidMoney")Double bidMoney,
+                                       @RequestParam("loanId")String loanId,HttpSession session){
+        User user = (User) session.getAttribute(Constants.SESSION_USER);
+        ReturnObject returnObject = new ReturnObject();
+
+        if (bidMoney>user.getFinanceAccount().getAvailableMoney()){
+            returnObject.setCode(Constants.ERROR_CODE);
+            returnObject.setMessage("账户余额不足，请充值");
+            return returnObject;
+        }
+
+
+        return returnObject;
     }
 }

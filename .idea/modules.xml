@@ -3,11 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/p2p-dataservice/p2p-dataservice.iml" filepath="$PROJECT_DIR$/p2p-dataservice/p2p-dataservice.iml" />
-      <module fileurl="file://$PROJECT_DIR$/p2p-exterface/p2p-exterface.iml" filepath="$PROJECT_DIR$/p2p-exterface/p2p-exterface.iml" />
-      <module fileurl="file://$PROJECT_DIR$/p2p-mybatisGenerator/p2p-mybatisGenerator.iml" filepath="$PROJECT_DIR$/p2p-mybatisGenerator/p2p-mybatisGenerator.iml" />
-      <module fileurl="file://$PROJECT_DIR$/p2p-outapi/p2p-outapi.iml" filepath="$PROJECT_DIR$/p2p-outapi/p2p-outapi.iml" />
-      <module fileurl="file://$PROJECT_DIR$/p2p-outapi-demo/p2p-outapi-demo.iml" filepath="$PROJECT_DIR$/p2p-outapi-demo/p2p-outapi-demo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/p2p-web/p2p-web.iml" filepath="$PROJECT_DIR$/p2p-web/p2p-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/p2p-dataservice/p2p-exterface.iml" filepath="$PROJECT_DIR$/p2p-dataservice/p2p-exterface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/p2p-dataservice/p2p-mybatisGenerator.iml" filepath="$PROJECT_DIR$/p2p-dataservice/p2p-mybatisGenerator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/p2p-dataservice/p2p-outapi.iml" filepath="$PROJECT_DIR$/p2p-dataservice/p2p-outapi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/p2p-dataservice/p2p-outapi-demo.iml" filepath="$PROJECT_DIR$/p2p-dataservice/p2p-outapi-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/p2p-dataservice/p2p-web.iml" filepath="$PROJECT_DIR$/p2p-dataservice/p2p-web.iml" />
     </modules>
   </component>
 </project>

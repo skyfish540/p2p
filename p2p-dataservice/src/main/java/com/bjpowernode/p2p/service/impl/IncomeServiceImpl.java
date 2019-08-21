@@ -23,4 +23,9 @@ public class IncomeServiceImpl implements IncomeService {
     public List<IncomeRecord> queryIncomeByUid(Map<String, Object> map) {
         return incomeRecordMapper.selectIncomeByUid(map);
     }
+
+    @Override
+    public long queryIncomeCountByUid(Integer uid) {
+        return incomeRecordMapper.selectIncomeCountByUid(uid);
+    }
 }

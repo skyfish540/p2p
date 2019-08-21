@@ -21,4 +21,6 @@ public interface IncomeRecordMapper {
     int updateByPrimaryKey(IncomeRecord record);
 
     List<IncomeRecord> selectIncomeByUid(Map<String, Object> map);
+
+    long selectIncomeCountByUid(Integer uid);
 }

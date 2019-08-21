@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/share.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css" />
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/loanInfo2.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/loanInfo3.js"></script>
     <script type="text/javascript">
         //获取产品详情信息。由于在js文件中不能使用EL表达式，所以只有在jsp页面中获取到之后保存在变量中，然后在js文件中使用。
         var bidMinLimit="${loanInfo.bidMinLimit}";//最小起投金额

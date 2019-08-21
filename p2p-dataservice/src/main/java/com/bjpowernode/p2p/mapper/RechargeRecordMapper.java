@@ -21,4 +21,6 @@ public interface RechargeRecordMapper {
     int updateByPrimaryKey(RechargeRecord record);
 
     List<RechargeRecord> selectRechargeByUid(Map<String, Object> map);
+
+    long selectRechargeCountByUid(Integer id);
 }

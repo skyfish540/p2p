@@ -28,6 +28,10 @@
     order by recharge_time desc
     limit #{startRow},#{pageSize}
   </select>
+
+  <select id="selectRechargeCountByUid" parameterType="java.lang.Integer" resultType="long">
+    select count(1) from t_recharge_record where uid=#{uid,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_recharge_record
     where id = #{id,jdbcType=INTEGER}
