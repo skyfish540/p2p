@@ -24,4 +24,5 @@ public class Constants {
     //个人中心数据列表显示条数
     public static final Integer MY_CENTER_PAGE_SIZE=5;
 
+
 }

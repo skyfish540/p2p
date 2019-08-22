@@ -3,6 +3,8 @@ package com.bjpowernode.p2p.mapper;
 import com.bjpowernode.p2p.model.FinanceAccount;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Map;
+
 @Mapper
 public interface FinanceAccountMapper {
     int deleteByPrimaryKey(Integer id);
@@ -18,4 +20,6 @@ public interface FinanceAccountMapper {
     int updateByPrimaryKey(FinanceAccount record);
 
     int insertFinanceAccount(FinanceAccount financeAccount);
+
+    int updateAvailMoneyByUidForBid(Map<String, Object> map);
 }

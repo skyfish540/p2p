@@ -262,4 +262,17 @@
       version = #{version,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <update id="updateLoanLeftMoneyByIdForBid" parameterType="map">
+    <!--高并发下的乐观锁，version控制数据的唯一-->
+    update t_loan_info
+    set left_product_money =left_product_money-#{bidMoney,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER} and version = #{version,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateProductStatusById" parameterType="map">
+    update t_loan_info
+    set product_status = #{productStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

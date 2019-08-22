@@ -30,4 +30,7 @@ public interface LoanInfoMapper {
 
     LoanInfo selectLoanInfoById(Integer pid);
 
+    int updateLoanLeftMoneyByIdForBid(Map<String, Object> loanMap);
+
+    int updateProductStatusById(Map<String, Object> loanMap);
 }

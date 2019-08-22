@@ -69,4 +69,10 @@
       available_money = #{availableMoney,jdbcType=DOUBLE}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <update id="updateAvailMoneyByUidForBid" parameterType="map">
+    update t_finance_account
+    set available_money = available_money -#{bidMoney,jdbcType=DOUBLE}
+    where uid=#{uid,jdbcType=INTEGER}
+  </update>
 </mapper>
