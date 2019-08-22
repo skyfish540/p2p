@@ -67,16 +67,15 @@ public class BidServiceImpl implements BidService {
             Map<String,Object> BidMap = new HashMap<>();
             BidMap.put("uid", user.getId());
             BidMap.put("bidMoney", bidMoney);
-            System.out.println("uid:"+user.getId());
-            System.out.println("bidMoney"+bidMoney);
             int updateAvailMoneyCount = financeAccountMapper.updateAvailMoneyByUidForBid(BidMap);
-            System.out.println(updateAvailMoneyCount);
+
             if (updateAvailMoneyCount>0){
                 //更新产品可投金额
                 Map<String,Object>  loanMap = new HashMap<>();
                 loanMap.put("id", loanInfo.getId());
                 loanMap.put("bidMoney", bidMoney);
                 loanMap.put("version",loanInfo.getVersion());
+                System.out.println("version："+loanInfo.getVersion());
                 int updateLoanLeftMoneyCount = loanInfoMapper.updateLoanLeftMoneyByIdForBid(loanMap);
 
                 if (updateLoanLeftMoneyCount>0){

@@ -73,6 +73,7 @@ public class BidController {
         ReturnObject returnObject = new ReturnObject();
         //再次验证投资金额,先查询出该产品信息
         LoanInfo loanInfo =loanService.queryLoanInfoById(loanId);
+        System.out.println(loanInfo);
         if (bidMoney==null){
             returnObject.setCode(Constants.ERROR_CODE);
             returnObject.setMessage("请输入投资金额");
