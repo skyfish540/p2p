@@ -68,8 +68,11 @@ public class RecharegeController {
     public String toAlipayRecharge(@RequestParam("alipayMoney") double alipayMoney,
                                    HttpSession session){
         User user= (User) session.getAttribute(Constants.SESSION_USER);
-        rechargeService.saveRechargeRecord(user.getId(),alipayMoney);
-
+        try {
+            rechargeService.saveRechargeRecord(user.getId(), alipayMoney);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
 
         return "";

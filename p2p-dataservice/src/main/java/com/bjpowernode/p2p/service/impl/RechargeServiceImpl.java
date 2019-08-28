@@ -2,6 +2,7 @@ package com.bjpowernode.p2p.service.impl;
 
 import com.bjpowernode.p2p.commons.Constants;
 import com.bjpowernode.p2p.commons.UUIDUtils;
+import com.bjpowernode.p2p.excepiton.MyException;
 import com.bjpowernode.p2p.mapper.RechargeRecordMapper;
 import com.bjpowernode.p2p.model.RechargeRecord;
 import com.bjpowernode.p2p.service.RechargeService;
@@ -40,6 +41,11 @@ public class RechargeServiceImpl implements RechargeService {
         rechargeRecord.setRechargeStatus(Constants.RECHARGE_STATUS_ING);
         rechargeRecord.setRechargeTime(new Date());
         rechargeRecord.setRechargeDesc("支付宝充值");
+        System.out.println(rechargeRecord);
+        int insertCount = rechargeRecordMapper.insert(rechargeRecord);
+        if (insertCount==0){
+            throw new MyException();
+        }
 
     }
 }
