@@ -6,11 +6,26 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://code.alibabatech.com/schema/dubbo
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
-
     <!--定义当前项目启动后Dubbo应用的名字 -->
     <dubbo:application name="p2p-dataService"/>
-    <!-- 配置zookeeper注册中心的地址，用于将Dubbo注册到这个zookeeper-->
-    <dubbo:registry timeout="5000"  address="zookeeper://192.168.244.128:2181"/>
-    <!-- 配置dubbo的包扫描路径用于找到那个带有doubbo的Service注解的类所在位置，用于服务的暴露 -->
-    <dubbo:annotation package="com.bjpowernode.p2p.service.impl"/>
+    <!-- 配置zookeeper注册中心 -->
+    <dubbo:provider timeout="30000"/>
+    <dubbo:registry protocol="zookeeper" address="192.168.244.128:2181"/>
+    <!--&lt;!&ndash; 注解配置dubbo的包扫描路径用于找到那个带有doubbo的Service注解的类所在位置，用于服务的暴露 &ndash;&gt;
+    <dubbo:annotation package="com.bjpowernode.p2p"/>-->
+
+
+    <!--配置文件形式对外暴露接口地址-->
+    <dubbo:service interface="com.bjpowernode.p2p.service.LoanService" ref="loanService"/>
+    <dubbo:service interface="com.bjpowernode.p2p.service.UserService" ref="userService"/>
+    <dubbo:service interface="com.bjpowernode.p2p.service.RechargeService" ref="rechargeService"/>
+    <dubbo:service interface="com.bjpowernode.p2p.service.BidService" ref="bidService"/>
+    <dubbo:service interface="com.bjpowernode.p2p.service.IncomeService" ref="incomeService"/>
+
+    <bean id="incomeService" class="com.bjpowernode.p2p.service.impl.IncomeServiceImpl"/>
+    <bean id="bidService" class="com.bjpowernode.p2p.service.impl.BidServiceImpl"/>
+    <bean id="rechargeService" class="com.bjpowernode.p2p.service.impl.RechargeServiceImpl"/>
+    <bean id="userService" class="com.bjpowernode.p2p.service.impl.UserServiceImpl"/>
+    <bean id="loanService" class="com.bjpowernode.p2p.service.impl.LoanServiceImpl"/>
+
 </beans>

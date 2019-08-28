@@ -1,6 +1,5 @@
 package com.bjpowernode.p2p.service.impl;
 
-import com.alibaba.dubbo.config.annotation.Service;
 import com.bjpowernode.p2p.commons.Constants;
 import com.bjpowernode.p2p.excepiton.MyException;
 import com.bjpowernode.p2p.mapper.BidInfoMapper;
@@ -12,6 +11,7 @@ import com.bjpowernode.p2p.model.User;
 import com.bjpowernode.p2p.service.BidService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  *
  */
-@Service(interfaceClass = BidService.class)
+@Service
 @Component
 public class BidServiceImpl implements BidService {
     @Autowired
@@ -68,16 +68,13 @@ public class BidServiceImpl implements BidService {
             BidMap.put("uid", user.getId());
             BidMap.put("bidMoney", bidMoney);
             int updateAvailMoneyCount = financeAccountMapper.updateAvailMoneyByUidForBid(BidMap);
-
             if (updateAvailMoneyCount>0){
                 //更新产品可投金额
                 Map<String,Object>  loanMap = new HashMap<>();
                 loanMap.put("id", loanInfo.getId());
                 loanMap.put("bidMoney", bidMoney);
                 loanMap.put("version",loanInfo.getVersion());
-                System.out.println("version："+loanInfo.getVersion());
                 int updateLoanLeftMoneyCount = loanInfoMapper.updateLoanLeftMoneyByIdForBid(loanMap);
-
                 if (updateLoanLeftMoneyCount>0){
                     // Double.doubleToLongBits将double类型数据转换成long类型数据,可以使double类型数据按照long的方法判断大小
                     long leftProductMoney=Double.doubleToLongBits(loanInfo.getLeftProductMoney());
@@ -97,7 +94,6 @@ public class BidServiceImpl implements BidService {
                 throw  new MyException();
             }
         }else {
-            //  如果抛出异常，需要再次更新投资状态为0
             throw  new MyException();
         }
     }

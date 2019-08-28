@@ -22,9 +22,9 @@ import java.util.Map;
 @Controller
 @RequestMapping("/loan")
 public class LoanController {
-    @Reference
+    @Resource
     private LoanService loanService;
-    @Reference
+    @Resource
     private BidService bidService;
 
     @RequestMapping("/queryListLoanByTypeForPage")
@@ -68,7 +68,7 @@ public class LoanController {
     }
 
     @RequestMapping("/loanInfo")
-    public String showLoanDedails(@RequestParam("id") Integer pid,Model model){
+    public String showLoanDedails(@RequestParam(name = "id",required = false) Integer pid,Model model){
 
         //查询产品信息(也可以同时连接投资表和用户表），一般情况连表查询不要查过2张
         LoanInfo loanInfo=loanService.queryLoanInfoById(pid);

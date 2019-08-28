@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -26,9 +27,9 @@ import java.util.Map;
 @Controller
 @RequestMapping("/bid")
 public class BidController {
-    @Reference
+    @Resource
     private BidService bidService;
-    @Reference
+   @Resource
     private LoanService loanService;
 
     @RequestMapping("/myBid")
@@ -73,7 +74,6 @@ public class BidController {
         ReturnObject returnObject = new ReturnObject();
         //再次验证投资金额,先查询出该产品信息
         LoanInfo loanInfo =loanService.queryLoanInfoById(loanId);
-        System.out.println(loanInfo);
         if (bidMoney==null){
             returnObject.setCode(Constants.ERROR_CODE);
             returnObject.setMessage("请输入投资金额");

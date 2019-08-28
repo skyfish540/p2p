@@ -8,11 +8,12 @@
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.bjpowernode.p2p"/>
+    <context:annotation-config/>
     <!--开启SpringMVC对注解的支持否则部分注解无法使用例如
         @ResponseBody
      -->
     <mvc:annotation-driven/>
+    <context:component-scan base-package="com.bjpowernode.p2p"/>
     <!--配置 对静态资源文件的访问-->
     <mvc:default-servlet-handler/>
 

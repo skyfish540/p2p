@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,11 +20,11 @@ import java.util.Map;
  */
 @Controller
 public class IndexController {
-    @Reference
+    @Resource
     private LoanService loanService;
-    @Reference
+    @Resource
     private UserService userService;
-    @Reference
+    @Resource
     private BidService bidService;
 
     @RequestMapping("/")    //斜杠(/)表示根目录

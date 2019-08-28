@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
     <!--
         配置数据源链接池，我们这里配置的是阿里巴巴的数据源链接池，如果需要使用DBCP或C3P0链接池
         那么直接替换class中的类路径即可，但是要求必须引入相关的jar包
@@ -16,12 +22,37 @@
     <!--配置MyBatis的链接工厂对象 -->
     <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <!--指定MyBatis的主配置文件路径我们不需要指定 直接通过注解找到SQL映射-->
-<!--        <property name="configLocation" value=""/>-->
+        <!-- 如果mybatis没有特殊的配置(比如别名等)，configLocation可以省去 ;否则，不能省略-->
+       <!-- <property name="configLocation" value="classpath:mybatis-configuration.xml"/>-->
     </bean>
-    <!--启动MyBatis的注解扫描， 用于扫描所有携带@Mapper的Java作为SQL映射-->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <!--通知MyBatis和Spring携带@Mapper注解的类在哪个目录下 -->
+    <!-- mapper注解扫描器配置,扫描@MapperScan注解,自动生成代码对象 -->
+    <bean id="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.bjpowernode.p2p.mapper"/>
+        <!--如果sqlSessionFactory中property name="configLocation"省略，则此处property可以省略，否则不能省略-->
+        <!--<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean"/>-->
     </bean>
-</beans>
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+    <!-- 配置事务 -->
+    <aop:config>
+        <aop:pointcut id="allMethodPointcut" expression="execution(* com.bjpowernode.p2p.service.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="allMethodPointcut"></aop:advisor>
+    </aop:config>
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="save*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="edit*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="do*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="*" propagation="REQUIRED" read-only="true"/>
+        </tx:attributes>
+
+    </tx:advice>
+
+    </beans>

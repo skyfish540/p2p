@@ -10,12 +10,14 @@ import com.bjpowernode.p2p.model.User;
 import com.bjpowernode.p2p.service.*;
 import org.apache.commons.lang3.StringUtils;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -28,15 +30,15 @@ import java.util.regex.Pattern;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    @Reference
+    @Resource
     private UserService userService;
-    @Reference
+    @Resource
     private LoanService loanService;
-    @Reference
+    @Resource
     private BidService bidService;
-    @Reference
+    @Resource
     private IncomeService incomeService;
-    @Reference
+    @Resource
     private RechargeService rechargeService;
 
 
@@ -178,7 +180,7 @@ public class UserController {
         map.put("phone",phone);
         map.put("loginPassword",loginPassword);
         try {
-            User user = userService.queryUserByPhoneAndLoginPassword(map);
+            User user = userService.doLoginByPhoneAndLoginPassword(map);
             if (user==null){
                 returnObject.setCode(Constants.ERROR_CODE);
                 returnObject.setMessage("用户名或密码错误");

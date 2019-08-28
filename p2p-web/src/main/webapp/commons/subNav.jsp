@@ -3,7 +3,7 @@
 <div class="mainBox">
     <ul>
       <li><a id="overView" href="${pageContext.request.contextPath}/user/myCenter" class="on">总览</a></li>
-      <li><a id="myAccount" href="${pageContext.request.contextPath}/user/myAccount">我的账户</a></li>
+      <li><a id="myAccount" href="${pageContext.request.contextPath}/user/myCenter">我的账户</a></li>
       <li></li>
       <li></li>
       <li></li>

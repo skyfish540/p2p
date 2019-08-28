@@ -11,7 +11,7 @@ public interface UserService {
 
     void addUser(Map<String, Object> map);
 
-    User queryUserByPhoneAndLoginPassword(Map<String, Object> map);
+    User doLoginByPhoneAndLoginPassword(Map<String, Object> map);
 
      boolean doRealNameVerify(Map<String, Object> map);
 }

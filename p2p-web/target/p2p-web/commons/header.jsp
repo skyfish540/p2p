@@ -26,8 +26,8 @@ $(function(){
             <li>
             	<h2><a id="wytz" href="javascript:void(0)">我要投资<i></i></a></h2>
             	<div class="menu-drop" style="display:none;">
-	               <a href="${pageContext.request.contextPath}/loan/listLoanByTypeforPage?productType=1">优选类产品</a>
-	               <a href="${pageContext.request.contextPath}/loan/listLoanByTypeforPage?productType=2">散标类产品</a>
+	               <a href="${pageContext.request.contextPath}/loan/queryListLoanByTypeForPage?productType=1">优选类产品</a>
+	               <a href="${pageContext.request.contextPath}/loan/queryListLoanByTypeForPage?productType=2">散标类产品</a>
 	            </div>
             </li>
             <li><h2><a id="borrowers" href="javascript:void(0)">借款人信息<i></i></a></h2></li>

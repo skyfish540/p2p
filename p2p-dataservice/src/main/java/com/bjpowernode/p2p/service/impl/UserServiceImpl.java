@@ -1,6 +1,5 @@
 package com.bjpowernode.p2p.service.impl;
 
-import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bjpowernode.p2p.commons.Constants;
@@ -13,6 +12,7 @@ import com.bjpowernode.p2p.model.User;
 import com.bjpowernode.p2p.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  *
  */
-@Service(interfaceClass = UserService.class)
+@Service
 @Component
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService {
         user.setPhone((String) map.get("phone"));
         user.setLoginPassword((String) map.get("loginPassword"));
         user.setAddTime(new Date());
+        //像用户表中太添加数据
         int userCount=userMapper.insertUser(user);
 
         System.out.println("1:"+user);
@@ -66,7 +67,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User queryUserByPhoneAndLoginPassword(Map<String, Object> map) {
+    public User doLoginByPhoneAndLoginPassword(Map<String, Object> map) {
         User tempUser=userMapper.selectUserByPhoneAndLoginPassword(map);
         if (tempUser!=null){
            tempUser.setLastLoginTime(new Date());

@@ -10,4 +10,6 @@ public interface RechargeService {
     List<RechargeRecord> queryRechargeByUid(Map<String, Object> map);
 
     long queryRechargeCountByUid(Integer id);
+
+    void saveRechargeRecord(Integer id, double alipayMoney);
 }

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/recharge")
 public class RecharegeController {
-    @Reference
+    @Resource
     private RechargeService rechargeService;
 
     @RequestMapping("/myRecharge")
@@ -60,8 +61,18 @@ public class RecharegeController {
         model.addAttribute("pageNo", pageNo);
         model.addAttribute("totalRows",totalRows);
         model.addAttribute("totalPages",totalPages);
-
         return "myRecharge";
+    }
+
+    @RequestMapping("/toAlipayRecharge")
+    public String toAlipayRecharge(@RequestParam("alipayMoney") double alipayMoney,
+                                   HttpSession session){
+        User user= (User) session.getAttribute(Constants.SESSION_USER);
+        rechargeService.saveRechargeRecord(user.getId(),alipayMoney);
+
+
+
+        return "";
     }
 
 }
