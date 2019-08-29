@@ -6,6 +6,11 @@
     <file type="web" url="file://$PROJECT_DIR$/p2p-outapi" />
     <file type="web" url="file://$PROJECT_DIR$/p2p-outapi-demo" />
     <file type="web" url="file://$PROJECT_DIR$/p2p-web" />
+    <file type="web" url="file://$PROJECT_DIR$/../p2p/p2p-dataservice" />
+    <file type="web" url="file://$PROJECT_DIR$/../p2p/p2p-mybatisGenerator" />
+    <file type="web" url="file://$PROJECT_DIR$/../p2p/p2p-outapi" />
+    <file type="web" url="file://$PROJECT_DIR$/../p2p/p2p-outapi-demo" />
+    <file type="web" url="file://$PROJECT_DIR$/../p2p/p2p-web" />
   </component>
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
@@ -13,6 +18,12 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
+        <option value="$PROJECT_DIR$/../p2p/p2p-exterface/pom.xml" />
+        <option value="$PROJECT_DIR$/../p2p/p2p-dataservice/pom.xml" />
+        <option value="$PROJECT_DIR$/../p2p/p2p-web/pom.xml" />
+        <option value="$PROJECT_DIR$/../p2p/p2p-outapi/pom.xml" />
+        <option value="$PROJECT_DIR$/../p2p/p2p-outapi-demo/pom.xml" />
+        <option value="$PROJECT_DIR$/../p2p/p2p-mybatisGenerator/pom.xml" />
         <option value="$PROJECT_DIR$/p2p-exterface/pom.xml" />
         <option value="$PROJECT_DIR$/p2p-dataservice/pom.xml" />
         <option value="$PROJECT_DIR$/p2p-web/pom.xml" />

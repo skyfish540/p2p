@@ -52,8 +52,8 @@ $(function(){
                         <div class="down-bk">
                             <div class="user-balance">余额：<span id="frame_top">${sessionScope.sessionUser.financeAccount.availableMoney == null ? "0" : sessionScope.sessionUser.financeAccount.availableMoney}</span>元</div>
                             <ul class="quick-entry clearfix">
-                                <li class="icon-recharge"><a href="${pageContext.request.contextPath}/recharge/intoRecharge"><i></i><span>充值</span></a></li>
-                                <li class="icon-invest" style="margin-left:85px;"><a href="${pageContext.request.contextPath}/loan/loan"><i></i><span>投资</span></a></li>
+                                <li class="icon-recharge"><a href="${pageContext.request.contextPath}/recharge/toRecharge"><i></i><span>充值</span></a></li>
+                                <li class="icon-invest" style="margin-left:85px;"><a href="${pageContext.request.contextPath}/"><i></i><span>投资</span></a></li>
                             </ul>
                             <div class="enter">进入“<a href="${pageContext.request.contextPath}/user/myCenter">我的小金库</a>”</div>
                             <div class="exit"><a href="${pageContext.request.contextPath}/user/logout">退出</a></div>

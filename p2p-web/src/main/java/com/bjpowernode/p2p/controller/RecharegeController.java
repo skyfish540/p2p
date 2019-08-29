@@ -1,7 +1,12 @@
 package com.bjpowernode.p2p.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alipay.api.*;
+import com.alipay.api.internal.util.AlipaySignature;
+import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.bjpowernode.p2p.commons.AlipayConfig;
 import com.bjpowernode.p2p.commons.Constants;
+import com.bjpowernode.p2p.commons.UUIDUtils;
 import com.bjpowernode.p2p.model.RechargeRecord;
 import com.bjpowernode.p2p.model.User;
 import com.bjpowernode.p2p.service.RechargeService;
@@ -11,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import javax.jws.WebParam;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -64,18 +69,93 @@ public class RecharegeController {
         return "myRecharge";
     }
 
-    @RequestMapping("/toAlipayRecharge")
-    public String toAlipayRecharge(@RequestParam("alipayMoney") double alipayMoney,
-                                   HttpSession session){
-        User user= (User) session.getAttribute(Constants.SESSION_USER);
-        try {
-            rechargeService.saveRechargeRecord(user.getId(), alipayMoney);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    @RequestMapping("/toRecharge")
+    public String toRecharge(){
 
-
-        return "";
+        return "toRecharge";
     }
 
+    @RequestMapping("/toAlipayRecharge")
+    public String toAlipayRecharge(@RequestParam("alipayMoney") double alipayMoney,
+                                   HttpSession session,
+                                   Model model){
+
+        User user= (User) session.getAttribute(Constants.SESSION_USER);
+        //下单
+        RechargeRecord rechargeRecord =new RechargeRecord();
+        rechargeRecord.setUid(user.getId());
+        rechargeRecord.setRechargeNo(UUIDUtils.getUUID());
+        rechargeRecord.setRechargeMoney(alipayMoney);
+        rechargeRecord.setRechargeStatus(Constants.RECHARGE_STATUS_ING);
+        rechargeRecord.setRechargeTime(new Date());
+        rechargeRecord.setRechargeDesc("支付宝充值");
+        int rechargeRecordCount=rechargeService.saveRechargeRecord(rechargeRecord);
+
+        //下单成功
+        if (rechargeRecordCount>0){
+                //获得初始化的AlipayClient
+                AlipayClient alipayClient =new DefaultAlipayClient(AlipayConfig.GATEWAY_URL,AlipayConfig.APP_ID,AlipayConfig.MERCHANT_PRIVATE_KEY,"json",AlipayConfig.CHARSET,AlipayConfig.ALIPAY_PUBLIC_KEY,AlipayConfig.SIGN_TYPE);
+                //设置请求参数
+                AlipayTradePagePayRequest alipayRequest=new AlipayTradePagePayRequest();
+                alipayRequest.setReturnUrl(AlipayConfig.RETURN_URL);
+                alipayRequest.setNotifyUrl(AlipayConfig.NOTIFY_URL);
+                alipayRequest.setBizContent("{\"out_trade_no\":\""+ rechargeRecord.getRechargeNo() +"\","
+                        + "\"total_amount\":\""+ alipayMoney +"\","
+                        + "\"subject\":\""+ "充值" +"\","
+                        + "\"body\":\""+ "充值-支付宝" +"\","
+                        + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}"
+                );
+                //发起请求
+                try {
+                    String responseBody = alipayClient.pageExecute(alipayRequest).getBody();
+                    System.out.println(responseBody);
+                    model.addAttribute("responseResult",responseBody);
+                    return "toAlipay";
+                } catch (AlipayApiException e) {
+                    e.printStackTrace();
+                    //支付宝下单失败
+                    model.addAttribute("trade_msg","支付宝下单失败");
+                    return "toRechargeBack";
+                }
+        }else {
+                //下单失败
+                model.addAttribute("trade_msg","下单失败");
+                return "toRechargeBack";
+        }
+    }
+
+    @RequestMapping("/alipayReturnURL")
+    public String alipayReturnURLAndQueryTradeResult(HttpServletRequest request,Model model){
+
+        try {
+            //获取支付宝GET过来反馈信息
+            Map<String, String> params = new HashMap<String, String>();
+            Map<String, String[]> requestParams = request.getParameterMap();
+            for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext(); ) {
+                String name = (String) iter.next();
+                String[] values = (String[]) requestParams.get(name);
+                String valueStr = "";
+                for (int i = 0; i < values.length; i++) {
+                    System.out.print(values[i]+",");
+                    valueStr = (i == values.length - 1) ? valueStr + values[i]
+                            : valueStr + values[i] + ",";
+                }
+                System.out.println(valueStr);
+                //乱码解决，这段代码在出现乱码时使用
+                valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
+                params.put(name, valueStr);
+            }
+
+            //调用SDK验证签名
+            boolean signVerified = AlipaySignature.rsaCheckV1(params, AlipayConfig.ALIPAY_PUBLIC_KEY, AlipayConfig.CHARSET, AlipayConfig.SIGN_TYPE);
+            //验签通过
+            if (signVerified){
+
+            }
+
+        }catch (Exception e){
+
+        }
+        return "";
+    }
 }

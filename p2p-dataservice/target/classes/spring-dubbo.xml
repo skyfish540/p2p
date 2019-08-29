@@ -10,7 +10,7 @@
     <dubbo:application name="p2p-dataService"/>
     <!-- 配置zookeeper注册中心 -->
     <dubbo:provider timeout="30000"/>
-    <dubbo:registry protocol="zookeeper" address="192.168.171.128:2181"/>
+    <dubbo:registry protocol="zookeeper" address="192.168.244.128:2181"/>
     <!--&lt;!&ndash; 注解配置dubbo的包扫描路径用于找到那个带有doubbo的Service注解的类所在位置，用于服务的暴露 &ndash;&gt;
     <dubbo:annotation package="com.bjpowernode.p2p"/>-->
 

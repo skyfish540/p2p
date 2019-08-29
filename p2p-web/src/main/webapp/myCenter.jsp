@@ -54,7 +54,7 @@
                     <li class="availMoney">
                         <h3>可用余额：</h3>
                         <span class="moneyIcon"><i>¥ ${sessionScope.sessionUser.financeAccount.availableMoney == null ? "0" : sessionScope.sessionUser.financeAccount.availableMoney} 元</i></span>
-                        <a class="recharge" href="${pageContext.request.contextPath}/toRecharge.jsp">充值</a>
+                        <a class="recharge" href="${pageContext.request.contextPath}/recharge/toRecharge">充值</a>
                         <a class="inves" href="${pageContext.request.contextPath}/loan/loanInfo">投资</a>
                     </li>
                 </ul>

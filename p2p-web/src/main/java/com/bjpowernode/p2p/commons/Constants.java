@@ -23,6 +23,10 @@ public class Constants {
     public  static final String SESSION_USER="sessionUser";
     //个人中心数据列表显示条数
     public static final Integer MY_CENTER_PAGE_SIZE=5;
+    //充值状态
+    public static final String RECHARGE_STATUS_ING="0";
+    public static final String RECHARGE_STATUS_OK="1";
+    public static final String RECHARGE_STATUS_NO="2";
 
 
 }

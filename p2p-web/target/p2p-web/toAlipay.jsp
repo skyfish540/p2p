@@ -11,6 +11,6 @@
     <title>努力加载中......</title>
 </head>
 <body>
-${result}
+${responseResult}
 </body>
 </html>

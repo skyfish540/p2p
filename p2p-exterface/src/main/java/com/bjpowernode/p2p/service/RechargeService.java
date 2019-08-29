@@ -11,5 +11,5 @@ public interface RechargeService {
 
     long queryRechargeCountByUid(Integer id);
 
-    void saveRechargeRecord(Integer id, double alipayMoney);
+    int saveRechargeRecord(RechargeRecord rechargeRecord);
 }

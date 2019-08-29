@@ -6,6 +6,11 @@
     <file url="file://$PROJECT_DIR$/p2p-outapi" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/p2p-outapi-demo" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/p2p-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../p2p/p2p-dataservice" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../p2p/p2p-mybatisGenerator" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../p2p/p2p-outapi" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../p2p/p2p-outapi-demo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../p2p/p2p-web" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

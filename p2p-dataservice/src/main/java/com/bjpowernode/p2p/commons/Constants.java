@@ -18,10 +18,7 @@ public class Constants {
     public static final Integer PRODUCT_STATUS_NO=0;
     public static final Integer PRODUCT_STATUS_OK=1;
     public static final Integer PRODUCT_STATUS_PLAN=0;
-    //充值状态
-    public static final String RECHARGE_STATUS_ING="0";
-    public static final String RECHARGE_STATUS_OK="1";
-    public static final String RECHARGE_STATUS_NO="2";
+
 
 
 
