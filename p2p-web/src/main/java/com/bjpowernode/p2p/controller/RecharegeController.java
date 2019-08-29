@@ -1,9 +1,12 @@
 package com.bjpowernode.p2p.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.*;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.bjpowernode.p2p.commons.AlipayConfig;
 import com.bjpowernode.p2p.commons.Constants;
 import com.bjpowernode.p2p.commons.UUIDUtils;
@@ -136,11 +139,11 @@ public class RecharegeController {
                 String[] values = (String[]) requestParams.get(name);
                 String valueStr = "";
                 for (int i = 0; i < values.length; i++) {
-                    System.out.print(values[i]+",");
+                    //System.out.print(values[i]+",");
                     valueStr = (i == values.length - 1) ? valueStr + values[i]
                             : valueStr + values[i] + ",";
                 }
-                System.out.println(valueStr);
+               // System.out.println(valueStr);
                 //乱码解决，这段代码在出现乱码时使用
                 valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
                 params.put(name, valueStr);
@@ -150,7 +153,43 @@ public class RecharegeController {
             boolean signVerified = AlipaySignature.rsaCheckV1(params, AlipayConfig.ALIPAY_PUBLIC_KEY, AlipayConfig.CHARSET, AlipayConfig.SIGN_TYPE);
             //验签通过
             if (signVerified){
+                String out_trade_no=new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
+                String trade_no=new String(request.getParameter("trade_no").getBytes("ISO-8859-1"), "UTF-8");
+                String total_amount=new String(request.getParameter("total_amount").getBytes("ISO-8859-1"), "UTF-8");
 
+                System.out.println("trade_no:" + trade_no + "<br/>out_trade_no:" + out_trade_no + "<br/>total_amount:" + total_amount);
+                //调用支付宝查询接口，得到交易结果
+                //获得初始化的AlipayClient
+                AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.GATEWAY_URL, AlipayConfig.APP_ID,
+                        AlipayConfig.MERCHANT_PRIVATE_KEY, "json", AlipayConfig.CHARSET, AlipayConfig.ALIPAY_PUBLIC_KEY,
+                        AlipayConfig.SIGN_TYPE);
+
+                //设置请求参数
+                AlipayTradeQueryRequest alipayRequest = new AlipayTradeQueryRequest();
+                alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\","+"\"trade_no\":\""+ trade_no +"\"}");
+                //请求
+                String result = alipayClient.execute(alipayRequest).getBody();
+                System.out.println(result);
+
+                //将字符串转成json对象,以便获取键值对
+                JSONObject jsonObject=(JSONObject) JSON.parse(result);
+                JSONObject responseJsonObject=jsonObject.getJSONObject("alipay_trade_query_response");
+                String code=responseJsonObject.getString("code");
+
+                if ("10000".equals(code)){
+                    //接口调用成功,获取交易状态
+                    String trade_status=responseJsonObject.getString("trade_status");
+                    if ("TRADE_SUCCESS".equals(trade_status)||"TRADE_FINISHED".equals(trade_status)){
+                        //交易成功
+                        //更新充值记录状态为充值成功、修改用户账户可用金额
+                    }
+
+                }
+
+
+
+
+                System.out.println("===========验签通过=============");
             }
 
         }catch (Exception e){
