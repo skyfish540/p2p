@@ -14,4 +14,6 @@ public interface UserService {
     User doLoginByPhoneAndLoginPassword(Map<String, Object> map);
 
      boolean doRealNameVerify(Map<String, Object> map);
+
+    User queryUserByUid(Integer id);
 }

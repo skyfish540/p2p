@@ -23,11 +23,21 @@
         <property name="suffix" value=".jsp"/>
     </bean>
     <!--定义拦截器类-->
-    <!--<mvc:interceptors>
-        &lt;!&ndash;可以同时配置多个拦截器去拦截同一个用户请求这时拦截器会按照配置的顺序继续执行，先配置的先执行后配置的后执行 &ndash;&gt;
+    <mvc:interceptors>
+        <!--可以同时配置多个拦截器去拦截同一个用户请求这时拦截器会按照配置的顺序继续执行，先配置的先执行后配置的后执行 -->
         <mvc:interceptor>
-            <mvc:mapping path="/admin/**"/>
-            <bean class="com.bjpowernode.rbac.interceptor.UserInterceptor"/>
+            <!--配置拦截请求-->
+            <mvc:mapping path="/user/*"/>
+            <mvc:mapping path="/bid/*"/>
+            <mvc:mapping path="/recharge/*"/>
+            <mvc:mapping path="/income/*"/>
+            <!--配置拦截排除-->
+            <mvc:exclude-mapping path="/user/login"/>
+            <mvc:exclude-mapping path="/user/register"/>
+            <mvc:exclude-mapping path="/user/checkPhone"/>
+            <mvc:exclude-mapping path="/user/checkCaptcha"/>
+
+            <bean class="com.bjpowernode.p2p.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
-    </mvc:interceptors>-->
+    </mvc:interceptors>
 </beans>

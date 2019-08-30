@@ -23,4 +23,8 @@ public interface RechargeRecordMapper {
     List<RechargeRecord> selectRechargeByUid(Map<String, Object> map);
 
     long selectRechargeCountByUid(Integer id);
+
+    RechargeRecord selectRechargeByRechargeNo(String out_trade_no);
+
+    int updateRechargeRecordByRechargeNo(Map<String, Object> map);
 }

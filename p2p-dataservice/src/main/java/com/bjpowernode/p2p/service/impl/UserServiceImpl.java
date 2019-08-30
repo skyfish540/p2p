@@ -106,4 +106,9 @@ public class UserServiceImpl implements UserService {
            return false;
         }
     }
+
+    @Override
+    public User queryUserByUid(Integer uid) {
+        return userMapper.selectUserByUid(uid);
+    }
 }

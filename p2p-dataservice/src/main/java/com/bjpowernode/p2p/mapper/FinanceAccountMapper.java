@@ -22,4 +22,6 @@ public interface FinanceAccountMapper {
     int insertFinanceAccount(FinanceAccount financeAccount);
 
     int updateAvailMoneyByUidForBid(Map<String, Object> map);
+
+    int updateAvailMoneyByUidForRecharge(Map<String, Object> map);
 }

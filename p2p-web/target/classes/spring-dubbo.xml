@@ -11,7 +11,7 @@
     <dubbo:application name="p2p-consumer"/>
     <!--配置zookeeper的注册中心地址 -->
     <dubbo:consumer timeout="30000"/>
-    <dubbo:registry protocol="zookeeper" address="192.168.171.128:2181"/>
+    <dubbo:registry protocol="zookeeper" address="192.168.244.128:2181"/>
     <!--&lt;!&ndash; 配置Dubbo注解的包扫描 用于找到带有Dubbo注解Reference的类所在位置&ndash;&gt;
     <dubbo:annotation package="com.bjpowernode.p2p"/>-->
     <!--配置文件形式-->

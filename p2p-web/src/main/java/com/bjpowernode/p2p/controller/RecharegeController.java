@@ -13,6 +13,8 @@ import com.bjpowernode.p2p.commons.UUIDUtils;
 import com.bjpowernode.p2p.model.RechargeRecord;
 import com.bjpowernode.p2p.model.User;
 import com.bjpowernode.p2p.service.RechargeService;
+import com.bjpowernode.p2p.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,12 +34,16 @@ import java.util.*;
 public class RecharegeController {
     @Resource
     private RechargeService rechargeService;
+    @Resource
+    private UserService userService;
 
     @RequestMapping("/myRecharge")
     public String rechargeRecord(@RequestParam(name = "pageNo",required = false) Integer pageNo,
                                  HttpSession session,
                                  Model model){
         User user= (User) session.getAttribute(Constants.SESSION_USER);
+        User sessionUser=userService.queryUserByUid(user.getId());
+        session.setAttribute(Constants.SESSION_USER, sessionUser);
         //计算startRow
         if (pageNo==null){
             pageNo=1;
@@ -175,26 +181,62 @@ public class RecharegeController {
                 JSONObject jsonObject=(JSONObject) JSON.parse(result);
                 JSONObject responseJsonObject=jsonObject.getJSONObject("alipay_trade_query_response");
                 String code=responseJsonObject.getString("code");
-
+                //用于存放更新的相关数据
+                Map<String,Object> map= new HashMap<>();
                 if ("10000".equals(code)){
                     //接口调用成功,获取交易状态
                     String trade_status=responseJsonObject.getString("trade_status");
                     if ("TRADE_SUCCESS".equals(trade_status)||"TRADE_FINISHED".equals(trade_status)){
                         //交易成功
-                        //更新充值记录状态为充值成功、修改用户账户可用金额
+                        //更新充值记录状态为充值成功、修改用户账户可用金额，因为是在支付宝页面所以获取不到当前用户的session，所以需要用订单号到充值记录表里查询用户ID
+                        RechargeRecord rechargeRecord=rechargeService.queryRechargeByRechargeNo(out_trade_no);
+                        map.put("rechargeStatus", Constants.RECHARGE_STATUS_OK);
+                        map.put("rechargeNo", out_trade_no);
+                        map.put("rechargeMoney", total_amount);
+                        map.put("uid", rechargeRecord.getUid());
+                        try {
+                            //更新充值记录状态为充值成功
+                            rechargeService.updateRechargeRecordByRechargeNo(map);
+                            //更新成功
+                            return "rechargeOK";
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            //掉单：1、客服解决问题，2、定时器处理掉单
+                            model.addAttribute("trade_msg","充值成功，如有问题请联系管理员");
+                            return "toRechargeBack";
+                        }
+
+                    }else {
+                        //交易失败
+                        //更新充值记录状态为充值失败
+                        map.put("rechargeNo", out_trade_no);
+                        map.put("rechargeStatus",Constants.RECHARGE_STATUS_NO);
+                        rechargeService.updateRechargeRecordByRechargeNo(map);
+                        model.addAttribute("trade_msg", "交易失败");
+                        return "toRechargeBack";
                     }
 
+                }else {
+                    //交易失败
+                    //更新充值记录状态为充值失败
+                    map.put("rechargeNo", out_trade_no);
+                    map.put("rechargeStatus",Constants.RECHARGE_STATUS_NO);
+                    rechargeService.updateRechargeRecordByRechargeNo(map);
+                    model.addAttribute("trade_msg", "交易失败");
+                    return "toRechargeBack";
                 }
 
-
-
-
-                System.out.println("===========验签通过=============");
+            }else {
+                model.addAttribute("trade_msg","验签失败，如有问题请联系管理员");
+                return "toRechargeBack";
             }
 
         }catch (Exception e){
+            e.printStackTrace();
+            //支付失败
+            model.addAttribute("trade_msg","支付失败，如有问题请联系管理员");
+            return "toRechargeBack";
 
         }
-        return "";
     }
 }

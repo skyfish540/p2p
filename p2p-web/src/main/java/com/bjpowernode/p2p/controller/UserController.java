@@ -188,7 +188,7 @@ public class UserController {
             }else {
                 System.out.println(user.getFinanceAccount());
                 //把用户信息保存到session中
-                session.setAttribute("sessionUser", user);
+                session.setAttribute(Constants.SESSION_USER, user);
                 returnObject.setCode(Constants.SUCCESS_CODE);
                 returnObject.setMessage("登录成功");
                 return returnObject;
@@ -305,6 +305,5 @@ public class UserController {
         //....
         return "redirect:/";
     }
-
 
 }

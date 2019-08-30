@@ -29,7 +29,7 @@ import java.util.Map;
 public class BidController {
     @Resource
     private BidService bidService;
-   @Resource
+    @Resource
     private LoanService loanService;
 
     @RequestMapping("/myBid")

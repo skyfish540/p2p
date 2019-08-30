@@ -12,4 +12,8 @@ public interface RechargeService {
     long queryRechargeCountByUid(Integer id);
 
     int saveRechargeRecord(RechargeRecord rechargeRecord);
+
+    RechargeRecord queryRechargeByRechargeNo(String out_trade_no);
+
+    void updateRechargeRecordByRechargeNo(Map<String, Object> map);
 }

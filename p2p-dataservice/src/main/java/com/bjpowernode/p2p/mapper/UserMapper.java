@@ -28,4 +28,6 @@ public interface UserMapper {
     User selectUserByPhoneAndLoginPassword(Map<String,Object> map);
 
     int updateUserRealName(User user);
+
+    User selectUserByUid(Integer uid);
 }
