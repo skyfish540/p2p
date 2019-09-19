@@ -22,7 +22,6 @@ import java.util.Map;
  *
  */
 @Service
-@Component
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;

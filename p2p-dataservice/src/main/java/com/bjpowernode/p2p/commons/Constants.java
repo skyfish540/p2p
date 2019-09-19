@@ -17,7 +17,17 @@ public class Constants {
     //产品状态
     public static final Integer PRODUCT_STATUS_NO=0;
     public static final Integer PRODUCT_STATUS_OK=1;
-    public static final Integer PRODUCT_STATUS_PLAN=0;
+    public static final Integer PRODUCT_STATUS_PLAN=2;
+    //redis中年化收益率key
+    public static final String AVG_HISTORY_RATE="avgHistroyRate";
+    //产品的类型
+    public static final Integer LOAN_TYPE_XINSHOUBAO=0;
+    public static final Integer LOAN_TYPE_YOUXUAN=1;
+    public static final Integer LOAN_TYPE_SANBIAO=2;
+    //收益状态
+    public static final Integer INCOME_STATUS_NO=0;
+    public static final Integer INCOME_STATUS_OK=1;
+
 
 
 

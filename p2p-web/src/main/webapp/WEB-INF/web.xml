@@ -5,17 +5,17 @@
          version="4.0">
 
 
-  <!--指定 Spring 配置文件的位置<context-param>-->
+ <!-- 指定 Spring 配置文件的位置<context-param>
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:applicationContext.xml</param-value>
   </context-param>
-  <!--配置监听器，目的是监听spring上下文的创建时机-->
+  &lt;!&ndash;配置监听器，目的是监听spring上下文的创建时机&ndash;&gt;
   <listener>
     <listener-class>
       org.springframework.web.context.ContextLoaderListener
     </listener-class>
-  </listener>
+  </listener>-->
   <!--配置SpringMVC提供的字符编码过滤器 -->
   <filter>
     <filter-name>characterEncodingFilter</filter-name>

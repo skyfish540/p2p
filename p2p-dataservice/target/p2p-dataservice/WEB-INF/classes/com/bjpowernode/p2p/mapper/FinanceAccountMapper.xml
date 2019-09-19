@@ -82,4 +82,10 @@
     where uid=#{uid,jdbcType=INTEGER}
   </update>
 
+  <update id="updateAvailMoneyByUidForIncome" parameterType="map">
+    update t_finance_account
+    set available_money = available_money +#{bidMoney}+#{incomeMoney}
+    where uid=#{uid,jdbcType=INTEGER}
+  </update>
+
 </mapper>

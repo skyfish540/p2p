@@ -76,6 +76,14 @@
   <select id="selectAllBidInfoByUid" parameterType="map" resultType="long">
     select count(1) from t_bid_info where uid=#{uid,jdbcType=INTEGER}
   </select>
+
+  <select id="queryBidByPidForIncome" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_bid_info
+    where loan_id = #{loanId,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_bid_info
     where id = #{id,jdbcType=INTEGER}

@@ -16,7 +16,6 @@ import java.util.Map;
  *
  */
 @Service
-@Component
 public class RechargeServiceImpl implements RechargeService {
     @Autowired
     private RechargeRecordMapper rechargeRecordMapper;

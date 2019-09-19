@@ -58,7 +58,10 @@ public class IndexController {
         model.addAttribute("countAllUsers",countAllUsers);
 
         //查询历史总投资金额
-        double allBidMoney=bidService.queryAllBidMoney();
+        Double allBidMoney=bidService.queryAllBidMoney();
+        if (allBidMoney==null){
+            allBidMoney=0.0;
+        }
         model.addAttribute("allBidMoney",allBidMoney);
 
         return "index";

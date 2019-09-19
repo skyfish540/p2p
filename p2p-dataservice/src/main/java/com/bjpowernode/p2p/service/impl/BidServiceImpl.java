@@ -22,7 +22,6 @@ import java.util.Map;
  *
  */
 @Service
-@Component
 public class BidServiceImpl implements BidService {
     @Autowired
     private BidInfoMapper bidInfoMapper;
@@ -32,23 +31,26 @@ public class BidServiceImpl implements BidService {
     private LoanInfoMapper loanInfoMapper;
 
     @Override
-    public double queryAllBidMoney() {
+    public Double queryAllBidMoney() {
         return bidInfoMapper.selectAllBidMoney();
 
     }
 
     @Override
-    public List<BidInfo> queryBidInfoById(Integer pid) {
+    public List<BidInfo> queryBidInfoById(Integer pid)
+    {
         return bidInfoMapper.selectBidInfoById(pid);
     }
 
     @Override
     public List<BidInfo> queryBidInfoByUid(Map<String, Object> map) {
+
         return bidInfoMapper.selectBidInfoByUid(map);
     }
 
     @Override
     public long queryAllBidInfoByUid(Map<String, Object> map) {
+
         return bidInfoMapper.selectAllBidInfoByUid(map);
     }
 

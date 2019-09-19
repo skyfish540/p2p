@@ -33,4 +33,6 @@ public interface LoanInfoMapper {
     int updateLoanLeftMoneyByIdForBid(Map<String, Object> loanMap);
 
     int updateProductStatusById(Map<String, Object> loanMap);
+
+    List<LoanInfo> queryLoanByStatus(Integer productStatusOk);
 }

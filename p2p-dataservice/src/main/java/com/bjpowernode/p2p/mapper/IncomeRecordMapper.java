@@ -23,4 +23,8 @@ public interface IncomeRecordMapper {
     List<IncomeRecord> selectIncomeByUid(Map<String, Object> map);
 
     long selectIncomeCountByUid(Integer uid);
+
+    List<IncomeRecord> queryIncomeByStatusAndIncomeDate(Integer incomeStatusNo);
+
+    int updateIncomeStatusById(Map<String, Object> map);
 }

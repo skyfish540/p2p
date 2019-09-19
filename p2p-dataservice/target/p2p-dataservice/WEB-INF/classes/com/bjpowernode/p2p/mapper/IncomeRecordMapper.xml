@@ -59,6 +59,14 @@
   <select id="selectIncomeCountByUid" parameterType="java.lang.Integer" resultType="long">
     select count(1) from t_income_record where uid=#{uid,jdbcType=INTEGER}
   </select>
+
+  <select id="queryIncomeByStatusAndIncomeDate" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_income_record
+    where income_date &lt;= current_date and income_status=#{incomeStatus,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_income_record
     where id = #{id,jdbcType=INTEGER}
@@ -162,6 +170,12 @@
       income_date = #{incomeDate,jdbcType=DATE},
       income_money = #{incomeMoney,jdbcType=DOUBLE},
       income_status = #{incomeStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateIncomeStatusById" parameterType="map">
+    update t_income_record
+    set income_status = #{incomeStatus,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

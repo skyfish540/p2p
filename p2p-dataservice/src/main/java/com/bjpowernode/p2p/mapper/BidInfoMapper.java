@@ -20,11 +20,13 @@ public interface BidInfoMapper {
 
     int updateByPrimaryKey(BidInfo record);
 
-    double selectAllBidMoney();
+    Double selectAllBidMoney();
 
     List<BidInfo> selectBidInfoById(Integer pid);
 
     List<BidInfo> selectBidInfoByUid(Map<String, Object> map);
 
     long selectAllBidInfoByUid(Map<String, Object> map);
+
+    List<BidInfo> queryBidByPidForIncome(Integer id);
 }
