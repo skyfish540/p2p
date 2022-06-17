@@ -175,7 +175,7 @@
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>fastjson</artifactId>
-      <version>1.2.36</version>
+      <version>1.2.83</version>
     </dependency>
 
     <!-- 配置本地公共接口依赖-->
